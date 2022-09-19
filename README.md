@@ -15,9 +15,9 @@ the m>0 modes.
 git clone https://github.com/BlackHolePerturbationToolkit/BHPTNRSurrogate.git
 ```
 
-# Available Models
+## Available Models
 
-### 1. BHPTNRSur1dq1e4
+#### 1. BHPTNRSur1dq1e4
 
 This model can generate waveforms from a merging non-spinning black hole binary 
 systems with mass-ratios varying from 2.5 to 10000. It supports a total of 50 
@@ -32,7 +32,7 @@ Model details can be found in the following paper:
 large-mass-ratio black hole binaries built on black hole perturbation theory waveforms
 calibrated to numerical relativity](https://arxiv.org/pdf/2204.01972.pdf)
 
-### 2. EMRISur1dq1e4
+#### 2. EMRISur1dq1e4
 
 A previous version of the model (which was known as EMRISurrogate) can be accessed
 from the following repository which we keep it for record. We, however, advise for 
