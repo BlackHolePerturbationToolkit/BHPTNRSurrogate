@@ -70,11 +70,17 @@ Or simply move the EMRISur1dq1e4.h5 file into the main directory.
 
 # Usage
 
+### 1. BHPTNRSur1dq1e4
 Example tutorial notebooks for the **BHPTNRSur1dq1e4** are available here `tutorials/BHPTNRSur1dq1e4/`
-Please see the accompanying Jupyter notebook
+Please see the accompanying Jupyter notebook for example use of the model
 
 ```bash
-jupyter notebook EMRISur1dq1e4.ipynb
+jupyter notebook BHPTNRSur1dq1e4_notebook.ipynb
+```
+Please see the notebook for a comparison between **BHPTNRSur1dq1e4** and **NRHybSur3dq8** in the 
+comparable mass ratio regime. 
+``bash
+jupyter notebook comparison_BHPTNRSur1dq1e4_NRHybSur3dq8.ipynb
 ```
 
 # Examples
