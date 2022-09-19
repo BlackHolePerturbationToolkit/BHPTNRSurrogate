@@ -11,6 +11,10 @@ These models has many higher order modes (at the least up to $\\ell=5$) apart
 from the dominant [(2,2)] mode of radiation. The m<0 modes are deduced from 
 the m>0 modes.
 
+## Getting the package
+
+The latest development version will always be available from the project git
+repository:
 ```bash
 git clone https://github.com/BlackHolePerturbationToolkit/BHPTNRSurrogate.git
 ```
@@ -34,18 +38,15 @@ calibrated to numerical relativity](https://arxiv.org/pdf/2204.01972.pdf)
 
 #### 2. EMRISur1dq1e4
 
+EMRISur1dq1e4 is the predecessor of the BHPTNRSurrogate models. EMRISur1dq1e4 is a non-spinning model trained
+for mass ratios $q=3$ to $q=10000$ and the dominant $(2,2)$ mode was calibrated to NR in the comparable mass
+ratios. The model is not supported in this package but can be accessed from 
+[EMRISurrogate](https://bhptoolkit.org/EMRISurrogate/).
+**CAUTION :** This model is outdated. We advise for  using BHPTNRSurrogate(s) from now on.
+
 A previous version of the model (which was known as EMRISurrogate) can be accessed
 from the following repository which we keep it for record. We, however, advise for 
 using BHPTNRSurrogate(s) from now on.
-
-## Getting the package
-
-The latest development version will always be available from the project git
-repository:
-
-```bash
-git clone https://github.com/BlackHolePerturbationToolkit/EMRISurrogate.git
-```
 
 # Requirements
 
