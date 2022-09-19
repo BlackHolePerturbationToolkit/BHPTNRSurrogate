@@ -70,6 +70,7 @@ Or simply move the EMRISur1dq1e4.h5 file into the main directory.
 
 # Usage
 
+Example tutorial notebooks for the **BHPTNRSur1dq1e4** are available here `tutorials/BHPTNRSur1dq1e4/`
 Please see the accompanying Jupyter notebook
 
 ```bash
