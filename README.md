@@ -102,4 +102,11 @@ If you make use of the EMRI surrogate model, EMRISur1dq1e4, please cite Paper 1:
     month = "4",
     year = "2022"
 }
+
+@article{rifat2019surrogate,
+  title={A Surrogate Model for Gravitational Wave Signals from Comparable-to Large-Mass-Ratio Black Hole Binaries},
+  author={Rifat, Nur EM and Field, Scott E and Khanna, Gaurav and Varma, Vijay},
+  journal={arXiv preprint arXiv:1910.10473},
+  year={2019}
+}
 ```
