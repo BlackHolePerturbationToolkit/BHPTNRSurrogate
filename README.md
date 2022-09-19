@@ -26,10 +26,14 @@ This model can generate waveforms from a merging non-spinning black hole binary
 systems with mass-ratios varying from 2.5 to 10000. It supports a total of 50 
 modes : [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),
 (5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),(8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
-and their m<0 counterparts.
+and their m<0 counterparts. Uncalibrated raw ppBHPT waveforms are ~30,500M long.
+Modes up to $\ell=5$ are NR-calibrated. The model has been further tested against
+state-of-art NR simulations at mass ratio $q=15,16,30,32$.
 
 Model details can be found in the following paper:
-[Surr](https://arxiv.org/pdf/2204.01972.pdf)
+[Surrogate model for gravitational wave signals from non-spinning, comparable- to
+large-mass-ratio black hole binaries built on black hole perturbation theory waveforms
+calibrated to numerical relativity](https://arxiv.org/pdf/2204.01972.pdf)
 
 ## Getting the package
 
