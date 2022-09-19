@@ -11,7 +11,7 @@ These models has many higher order modes (at the least up to $\\ell=5$) apart
 from the dominant [(2,2)] mode of radiation. The m<0 modes are deduced from 
 the m>0 modes.
 
-A previous version of the model (which was kknown as EMRISurrogate) can be accessed
+A previous version of the model (which was known as EMRISurrogate) can be accessed
 from the following repository which we keep it for record
 ```bash
 git clone https://github.com/BlackHolePerturbationToolkit/EMRISurrogate.git
