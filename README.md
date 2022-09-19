@@ -59,19 +59,17 @@ run most parts of the notebook.
 # Installation
 
 1. Clone the repository
-2. Download the datafile (hosted on [Zenodo](https://zenodo.org/record/3612600#.YYPdG3VKg5k))
+2. Download the datafile from Google Drive (this data will eventually be hosted in Zenodo)
 
 ```bash
-wget https://zenodo.org/record/3612600/files/EMRISur1dq1e4.h5
+https://drive.google.com/file/d/1oDs6zwT8oHsDMDx0t9ip-FF6JiQANpct/view?usp=sharing
 ```
-
-3. Create a static link from in the main directory to the EMRISur1dq1e4.h5 file.
-Or simply move the EMRISur1dq1e4.h5 file into the main directory.
+3. Simply move the BHPTNRSur1dq1e4.h5 file into the data directory `BHPTNRSurrogate/data/`.
 
 # Example Usage
 
 ### 1. BHPTNRSur1dq1e4
-Example tutorial notebooks for the **BHPTNRSur1dq1e4** are available here `tutorials/BHPTNRSur1dq1e4/`
+Example tutorial notebooks for the **BHPTNRSur1dq1e4** are available here `BHPTNRSurrogate/tutorials/BHPTNRSur1dq1e4/`
 Please see the accompanying Jupyter notebook for example use of the model
 
 ```bash
