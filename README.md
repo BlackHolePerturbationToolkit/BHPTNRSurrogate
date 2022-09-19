@@ -68,7 +68,7 @@ wget https://zenodo.org/record/3612600/files/EMRISur1dq1e4.h5
 3. Create a static link from in the main directory to the EMRISur1dq1e4.h5 file.
 Or simply move the EMRISur1dq1e4.h5 file into the main directory.
 
-# Usage
+# Example Usage
 
 ### 1. BHPTNRSur1dq1e4
 Example tutorial notebooks for the **BHPTNRSur1dq1e4** are available here `tutorials/BHPTNRSur1dq1e4/`
@@ -79,13 +79,9 @@ jupyter notebook BHPTNRSur1dq1e4_notebook.ipynb
 ```
 Please see the notebook for a comparison between **BHPTNRSur1dq1e4** and **NRHybSur3dq8** in the 
 comparable mass ratio regime. 
-``bash
+```bash
 jupyter notebook comparison_BHPTNRSur1dq1e4_NRHybSur3dq8.ipynb
 ```
-
-# Examples
-
-Examples are included in the Jupyter notebook.
 
 # Known problems
 
