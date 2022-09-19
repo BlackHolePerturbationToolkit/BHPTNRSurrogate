@@ -11,12 +11,9 @@ These models has many higher order modes (at the least up to $\\ell=5$) apart
 from the dominant [(2,2)] mode of radiation. The m<0 modes are deduced from 
 the m>0 modes.
 
-A previous version of the model (which was known as EMRISurrogate) can be accessed
-from the following repository which we keep it for record
 ```bash
-git clone https://github.com/BlackHolePerturbationToolkit/EMRISurrogate.git
+git clone https://github.com/BlackHolePerturbationToolkit/BHPTNRSurrogate.git
 ```
-We, however, advise for using BHPTNRSurrogate(s) from now on.
 
 # Available Models
 
@@ -34,6 +31,12 @@ Model details can be found in the following paper:
 [Surrogate model for gravitational wave signals from non-spinning, comparable- to
 large-mass-ratio black hole binaries built on black hole perturbation theory waveforms
 calibrated to numerical relativity](https://arxiv.org/pdf/2204.01972.pdf)
+
+### 2. EMRISur1dq1e4
+
+A previous version of the model (which was known as EMRISurrogate) can be accessed
+from the following repository which we keep it for record. We, however, advise for 
+using BHPTNRSurrogate(s) from now on.
 
 ## Getting the package
 
@@ -84,7 +87,7 @@ Examples are included in the Jupyter notebook.
 
 Known bugs are recorded in the project bug tracker:
 
-https://github.com/BlackHolePerturbationToolkit/EMRISurrogate/issues
+https://github.com/BlackHolePerturbationToolkit/BHPTNRSurrogate/issues
 
 
 # License
@@ -97,8 +100,7 @@ be found in the LICENSE file.
 
 Tousif Islam 
 Scott Field   
-Gaurav Khanna    
-Vijay Varma
+Gaurav Khanna 
 
 # Citation guideline
 
@@ -106,7 +108,7 @@ If you make use of any module from the Toolkit in your research please acknowled
 
 > This work makes use of the Black Hole Perturbation Toolkit.
 
-If you make use of the EMRI surrogate model, EMRISur1dq1e4, please cite Paper 1:
+If you make use of the BHPTNRSur models please cite the following paper:
 
 ```
 @article{Islam:2022laz,
@@ -117,12 +119,5 @@ If you make use of the EMRI surrogate model, EMRISur1dq1e4, please cite Paper 1:
     primaryClass = "gr-qc",
     month = "4",
     year = "2022"
-}
-
-@article{rifat2019surrogate,
-  title={A Surrogate Model for Gravitational Wave Signals from Comparable-to Large-Mass-Ratio Black Hole Binaries},
-  author={Rifat, Nur EM and Field, Scott E and Khanna, Gaurav and Varma, Vijay},
-  journal={arXiv preprint arXiv:1910.10473},
-  year={2019}
 }
 ```
