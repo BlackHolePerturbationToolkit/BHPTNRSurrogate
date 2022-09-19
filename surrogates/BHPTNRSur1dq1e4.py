@@ -16,10 +16,10 @@ import os
 from os import path
 import subprocess
 
-import surrogate_utils.BHPTNRSur1dq1e4.load_surrogate_fits as load
-import surrogate_utils.BHPTNRSur1dq1e4.generate_raw_surrogate as raw_sur
-import surrogate_utils.BHPTNRSur1dq1e4.nr_calibration as nrcal
-import surrogate_utils.BHPTNRSur1dq1e4.utils as utils
+import model_utils.BHPTNRSur1dq1e4.load_surrogate_fits as load
+import model_utils.BHPTNRSur1dq1e4.generate_raw_surrogate as raw_sur
+import model_utils.BHPTNRSur1dq1e4.nr_calibration as nrcal
+import common_utils.utils as utils
 
 
 # h5 data directory
