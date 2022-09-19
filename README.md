@@ -29,7 +29,7 @@ modes : [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),
 and their m<0 counterparts.
 
 Model details can be found in the following paper:
-[Surrogate model for gravitational wave signals from non-spinning, comparable- to large-mass-ratio black hole binaries built on black hole perturbation theory waveforms calibrated to numerical relativity] (https://arxiv.org/pdf/2204.01972.pdf)
+[Surr](https://arxiv.org/pdf/2204.01972.pdf)
 
 ## Getting the package
 
