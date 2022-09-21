@@ -48,9 +48,14 @@ this package but can be accessed from [EMRISurrogate](https://bhptoolkit.org/EMR
 
 # Requirements
 
-This package requires Python 3 and the sklearn package. Parts of the accompanying
-Jupyter notebook will require gwsurrogate, which can be installed with either
-pip
+This package requires Python 3, sklearn, hashlib, and gwtools.
+
+```bash
+pip install scikit-learn hashlib gwtools
+```
+
+Parts of the accompanying Jupyter notebook will require gwsurrogate, 
+which can be installed with either pip
 
 ```bash
 pip install gwsurrogate
