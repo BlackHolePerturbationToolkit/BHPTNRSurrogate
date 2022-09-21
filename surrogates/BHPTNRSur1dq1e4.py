@@ -56,17 +56,20 @@ def generate_surrogate(q, modes=None, M_tot=None, dist_mpc=None, orb_phase=None,
     
     lmax:  5 (default)
            Modes upto l=5 are NR calibrated. Modes l>6 are uncalibrated
-           Note : If one provides a list of modes, modes beyond lmax will not be returned
+           Note: If one provides a list of modes, modes beyond lmax 
+                 will not be returned
             
-    mode_sum:  If true, all modes are summed. If false all modes are returned in a dictionary
-               default: false
+    mode_sum:  If true, all modes are summed. If false all modes are returned 
+               in a dictionary. Default: false
                Note: Only works when orb_phase and inclination are not None
                
     calibrated:  Whether you want NR-calibrated waveform or not
-                 When set to True, it applies a scaling to the uncalibrated (raw) surrogate waveform 
-                 This scaling has been obtained by calibrating the ppBHPT waveforms to NR in comparable mass ratio regime (3<=q<=9)
-                 If set to False, the raw (uncalibrated)  ppBHPT waveforms are returned.
-                 default: True
+                 When set to True, it applies a scaling to the uncalibrated
+                 surrogate waveform. This scaling has been obtained by calibrating
+                 the ppBHPT waveforms to NR in comparable mass ratio
+                 regime (3<=q<=9). If set to False, the raw (uncalibrated)
+                 ppBHPT waveforms are returned.
+                 Default: True
 
                  
     Output
