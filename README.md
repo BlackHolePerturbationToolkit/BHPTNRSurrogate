@@ -96,9 +96,7 @@ be found in the LICENSE file.
 
 # Authors
 
-Tousif Islam                                                                     
-Scott Field                                                                              
-Gaurav Khanna  
+Scott Field, Tousif Islam, Gaurav Khanna, Nur Rifat, Vijay Varma
 
 # Citation guideline
 
