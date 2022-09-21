@@ -1,6 +1,6 @@
 ##==============================================================================
 ## BHPTNRSur1dq1e4 : arXiv:2204.01972
-## Description : generates calibrated ppBHPT surrogate
+## Description : generates calibrated ppBHPT surrogate model BHPTNRSur1dq1e4
 ## Author : Tousif Islam, Aug 2022 [tislam@umassd.edu / tousifislam24@gmail.com]
 ##==============================================================================
 
@@ -29,74 +29,84 @@ time, eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph
 eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, h_eim_im_spline_dict, alpha_coeffs, beta_coeffs = load.load_surrogate(h5_data_dir)
 
 #---------------------------------------------------------------------------------------------------- 
-def generate_surrogate(q_input, modes=None, M_tot=None, dist_mpc=None, orb_phase=None, inclination=None, neg_modes=True, mode_sum=False, lmax=5, calibrated=True):
+def generate_surrogate(q, modes=None, M_tot=None, dist_mpc=None, orb_phase=None, inclination=None, neg_modes=True, mode_sum=False, lmax=5, calibrated=True):
     """ 
     Description : Top-level function to generate surrogate waveform in either geometric or physical units
     
-    Inputs
-    ====================
-    q_input : mass ratio
+    Input
+    =====
+    q:      mass ratio
     
-    modes : list of modes
-            default is all available modes in the model i.e. [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),(8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
+    modes:  list of modes
+            Default (None) corresponds to all available modes in the model
+
+            [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),
+             (5,3),(5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),
+             (7,7),(8,6),(8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
             
-    M_tot : total mass of the binary in solar unit
-              default: None (in which case geometric wf is returned)
+    M_tot:     total mass of the binary in solar masses
+               Default: None (in which case a geometric waveform is returned)
     
-    dist_mpc : distance of the binary from the observer in Mpc
-               default: None (in which case geometric wf is returned)
+    dist_mpc:  distance of the binary from the observer in Mpc
+               Default: None (in which case geometric wf is returned)
                
-    orb_phase : orbital phase
+    orb_phase: orbital phase
     
-    inclination : inclination angle
+    inclination: inclination angle
     
-    lmax : 5 (deafult)
-           Modes upto l=5 are NR calibrated
+    lmax:  5 (default)
+           Modes upto l=5 are NR calibrated. Modes l>6 are uncalibrated
            Note : If one provides a list of modes, modes beyond lmax will not be returned
             
-    mode_sum : False
-               Only works when orb_phase and inclination are not None
+    mode_sum:  If true, all modes are summed. If false all modes are returned in a dictionary
+               default: false
+               Note: Only works when orb_phase and inclination are not None
                
-    calibrated : tell whether you want NR calibrated waveform or not
-                 When set to True, it applies a scaling to the raw surrogate waveform 
+    calibrated:  Whether you want NR-calibrated waveform or not
+                 When set to True, it applies a scaling to the uncalibrated (raw) surrogate waveform 
                  This scaling has been obtained by calibrating the ppBHPT waveforms to NR in comparable mass ratio regime (3<=q<=9)
                  If set to False, the raw (uncalibrated)  ppBHPT waveforms are returned.
                  default: True
+
                  
     Output
-    ====================
+    ======
     t : time
-    h : waveform modes
-                 
+    h : waveform modes as a dictionary
+
+
     Example Uses:
-    ====================
-    1. to obtain raw geometric waveform
-            t, h = generate_surrogate(q_input=8, modes=[(2,1),(2,2),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5)], calibrated=False)
+    =============
+    1. to obtain uncalibrated (raw) geometric waveform
+            t, h = generate_surrogate(q=8, modes=[(2,1),(2,2),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5)], calibrated=False)
     2. to obtain NR Calibrated geometric waveform
-            t, h = generate_surrogate(q_input=8, modes=mode_list)       
+            t, h = generate_surrogate(q=8, modes=mode_list)       
     3. to obtain NR calibrated physical waveform
-            t, h = generate_surrogate(q_input=q, modes=mode_list, M_tot=50, dist_mpc=100)
+            t, h = generate_surrogate(q=q, modes=mode_list, M_tot=50, dist_mpc=100)
     4. to obtain NR calibrated physical waveform on a sphere
-            t, h = generate_surrogate(q_input=q, modes=mode_list, M_tot=50, dist_mpc=100, orb_phase=np.pi/3, inclination=np.pi/4)
+            t, h = generate_surrogate(q=q, modes=mode_list, M_tot=50, dist_mpc=100, orb_phase=np.pi/3, inclination=np.pi/4)
     5. to obtain NR calibrated physical waveform on a sphere for modes up to l=5
-            t, h = generate_surrogate(q_input=q, modes=mode_list, M_tot=50, dist_mpc=100, orb_phase=np.pi/3, inclination=np.pi/4, lmax=5)
+            t, h = generate_surrogate(q=q, modes=mode_list, M_tot=50, dist_mpc=100, orb_phase=np.pi/3, inclination=np.pi/4, lmax=5)
     6. to obtain mode-summed NR calibrated physical waveform on a sphere
-            t, h = generate_surrogate(q_input=8, M_tot=60, dist_mpc=100, orb_phase=np.pi/3, inclination=np.pi/4, lmax=3, mode_sum=True)
+            t, h = generate_surrogate(q=8, M_tot=60, dist_mpc=100, orb_phase=np.pi/3, inclination=np.pi/4, lmax=3, mode_sum=True)
          
             
     """
+
+    if (M_tot is None) ^ (dist_mpc is None):
+        raise ValueError("Either specify both M_tot and dist_mpc, or neither")
     
     if modes==None:
         modes=[(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),(8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
         
-    # raw geometric waveforms
-    hsur_raw_dict = raw_sur.all_modes_surrogate(modes, q_input,
+    # uncalibrated waveforms in geometric units
+    hsur_raw_dict = raw_sur.all_modes_surrogate(modes, q,
               eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph_spline,
               eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, h_eim_im_spline_dict,
               lmax, calibrated)
     
     if calibrated==True:
-        t_sur, hsur_dict = nrcal.generate_calibrated_ppBHPT(q_input, time, hsur_raw_dict, alpha_coeffs, beta_coeffs)
+        t_sur, hsur_dict = nrcal.generate_calibrated_ppBHPT(q, time, hsur_raw_dict, alpha_coeffs, beta_coeffs)
         if lmax>5:
             print('WARNING : only modes up to \ell=5 are NR calibrated')
     else:
