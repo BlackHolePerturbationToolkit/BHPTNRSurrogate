@@ -5,11 +5,12 @@ Copyright (c) 2020 Black Hole Perturbation Toolkit Team
 The BHPTNRSurrogate(s) package provides access to a family of surrogate 
 gravitational waveform models built on waveforms generated with point-particle 
 black hole perturbation theory (ppBHPT) framework. These models extend from 
-comparable mass-ratio to large mass-ratio regime and are tuned 
+comparable mass-ratio to large mass-ratio regimes and are tuned 
 to numerical relativity (NR) waveforms at the comprable-mass-ratio regime.
-These models has many higher order modes (at the least up to $\\ell=5$) apart 
-from the dominant [(2,2)] mode of radiation. The m<0 modes are deduced from 
-the m>0 modes.
+Many harmonic modes are included, for example the BHPTNRSur1dq1e4 model
+includes up to up to $\\ell=10$. Please see the the 
+BHPTNRSurrogate package [landing page](https://bhptoolkit.org/BHPTNRSurrogate/)
+for more detail. 
 
 ## Getting the package
 
@@ -36,21 +37,29 @@ Model details can be found in the following paper:
 large-mass-ratio black hole binaries built on black hole perturbation theory waveforms
 calibrated to numerical relativity](https://arxiv.org/pdf/2204.01972.pdf)
 
-#### 2. EMRISur1dq1e4
+#### 2. EMRISur1dq1e4 (deprecated)
 
-EMRISur1dq1e4 is the predecessor of the BHPTNRSurrogate models. EMRISur1dq1e4 is a 
-non-spinning model trained for mass ratios $q=3$ to $q=10000$ and the dominant $(2,2)$ 
-mode was calibrated to NR in the comparable mass ratios. The model is NOT supported in 
+EMRISur1dq1e4 is the predecessor of the BHPTNRSur1dq1e4 model, which includes numerous
+numerous upgrades (please see [table 1](https://arxiv.org/pdf/2204.01972.pdf)). EMRISur1dq1e4 is
+a non-spinning model trained for mass ratios $q=3$ to $q=10000$ and the dominant $(2,2)$ 
+mode was calibrated to NR in the comparable mass ratios. The EMRISur1dq1e4 model is NOT supported in 
 this package but can be accessed from [EMRISurrogate](https://bhptoolkit.org/EMRISurrogate/).
-**CAUTION :** This model is outdated. We advise for using BHPTNRSurrogate(s) from now on.
+**CAUTION :** This model is outdated and we advise for using BHPTNRSurrogate(s).
 
 # Requirements
 
 This package requires Python 3 and the sklearn package. Parts of the accompanying
-Jupyter notebook will require gwsurrogate, which can be installed with 
+Jupyter notebook will require gwsurrogate, which can be installed with either
+pip
 
 ```bash
 pip install gwsurrogate
+```
+
+or conda
+
+```bash
+conda install -c conda-forge gwsurrogate
 ```
 
 Note that you do not need gwsurrogate to evalulate the EMRI surrogate model or 
