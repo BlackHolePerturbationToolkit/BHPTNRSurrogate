@@ -44,9 +44,9 @@ def load_surrogate(h5_data_dir):
 
             if mode==(2,2):
 
-                eim_indicies_amp_dataset=f['l%s_m%s/eim_indicies'%(lmode,mmode)]
+                eim_indicies_amp_dataset=f['l%s_m%s/eim_indices'%(lmode,mmode)]
                 eim_indicies_amp=eim_indicies_amp_dataset[:]
-                eim_indicies_ph_dataset=f['l%s_m%s/eim_indicies_phase'%(lmode,mmode)]
+                eim_indicies_ph_dataset=f['l%s_m%s/eim_indices_phase'%(lmode,mmode)]
                 eim_indicies_ph=eim_indicies_ph_dataset[:]
                 B_ph_dataset=f['l%s_m%s/B_phase'%(lmode,mmode)]
                 B_ph=np.transpose(B_ph_dataset[:])
@@ -58,11 +58,11 @@ def load_surrogate(h5_data_dir):
                 degree=degree_dataset[:]
                 knots_dataset_amp=f['l%s_m%s/spline_knots_amp'%(lmode,mmode)]
                 knots_amp=knots_dataset_amp[:]
-                knots_dataset_ph=f['l%s_m%s/spline_knots_ph'%(lmode,mmode)]
+                knots_dataset_ph=f['l%s_m%s/spline_knots_phase'%(lmode,mmode)]
                 knots_ph=knots_dataset_ph[:]
                 h_spline_amp_dataset=f['l%s_m%s/fitparams_amp'%(lmode,mmode)]
                 h_spline_amp=h_spline_amp_dataset[:]
-                h_spline_ph_dataset=f['l%s_m%s/fitparams_ph'%(lmode,mmode)]
+                h_spline_ph_dataset=f['l%s_m%s/fitparams_phase'%(lmode,mmode)]
                 h_spline_ph=h_spline_ph_dataset[:]
 
                 h_eim_amp_spline=[(knots_amp[flag], h_spline_amp[flag],int(degree)) for flag in range(len(eim_indicies_amp))]
@@ -70,9 +70,9 @@ def load_surrogate(h5_data_dir):
 
             else:
 
-                eim_indicies_re_dataset=f['l%s_m%s/eim_indicies'%(lmode,mmode)]
+                eim_indicies_re_dataset=f['l%s_m%s/eim_indices'%(lmode,mmode)]
                 eim_indicies_re_dict[(mode)]=eim_indicies_re_dataset[:]
-                eim_indicies_im_dataset=f['l%s_m%s/eim_indicies_im'%(lmode,mmode)]
+                eim_indicies_im_dataset=f['l%s_m%s/eim_indices_im'%(lmode,mmode)]
                 eim_indicies_im_dict[(mode)]=eim_indicies_im_dataset[:]
                 B_im_dataset=f['l%s_m%s/B_im'%(lmode,mmode)]
                 B_im_dict[(mode)]=np.transpose(B_im_dataset[:])
