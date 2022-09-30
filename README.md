@@ -73,10 +73,10 @@ run most parts of the notebook.
 # Installation
 
 1. Clone the repository
-2. Download the datafile from Google Drive (this data will eventually be hosted in Zenodo)
+2. Download the datafile from Zenodo
 
 ```bash
-https://drive.google.com/file/d/1oDs6zwT8oHsDMDx0t9ip-FF6JiQANpct/view?usp=sharing
+wget https://zenodo.org/record/7125742/BHPTNRSur1dq1e4.h5
 ```
 3. Simply move the BHPTNRSur1dq1e4.h5 file into the data directory `BHPTNRSurrogate/data/`.
 
