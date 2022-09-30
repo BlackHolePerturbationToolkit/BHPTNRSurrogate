@@ -7,6 +7,27 @@
 import numpy as np
 import h5py
 import os
+from os import path
+import hashlib
+
+#----------------------------------------------------------------------------------------------------
+def md5(fname,h5_data_dir):
+    """ Compute has from file. code taken from 
+    https://stackoverflow.com/questions/3431825/generating-an-md5-checksum-of-a-file"""
+    
+    # download file if not already there
+    if path.isfile('%s/%s'%(h5_data_dir,fname))==False:
+        print('BHPTNRSur1dq1e4.h5 file is not found in the directory - PATH-TO/BHPTNRSurrogate/data/')
+        print('... downloading h5 file from zenodo')
+        print('... this might take some time')
+        os.system('wget https://zenodo.org/record/7125742/files/BHPTNRSur1dq1e4.h5 -P %s'%h5_data_dir)
+        print('... downloaded')
+    
+    hash_md5 = hashlib.md5()
+    with open('%s/%s'%(h5_data_dir,fname), "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
 
 #----------------------------------------------------------------------------------------------------
 def load_surrogate(h5_data_dir):
@@ -17,6 +38,13 @@ def load_surrogate(h5_data_dir):
     Assumes the file BHPTNRSur1dq1e4.h5 is located in the same directory as this file.
     """
     
+    file_hash = md5('BHPTNRSur1dq1e4.h5',h5_data_dir)
+    zenodo_current_hash = "58a3a75e8fd18786ecc88cf98f694d4a"
+
+    if file_hash != zenodo_current_hash:
+        raise AttributeError("EMRISur1dq1e4.h5 out of date.\n Please download new version from https://zenodo.org/record/7125742")
+
+
     with h5py.File('%s/BHPTNRSur1dq1e4.h5'%h5_data_dir, 'r') as f:
 
         modes = [(2,2),(2,1),
