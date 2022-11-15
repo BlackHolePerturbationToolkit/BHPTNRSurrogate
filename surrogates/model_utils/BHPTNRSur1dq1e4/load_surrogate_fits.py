@@ -30,106 +30,178 @@ def md5(fname,h5_data_dir):
     return hash_md5.hexdigest()
 
 #----------------------------------------------------------------------------------------------------
+def read_amplitude_fits(f, lmode, mmode):
+    """
+    Read fit info for the amplitude of 22 mode
+    """
+    # EIM nodes
+    eim_indicies_amp=f['l%s_m%s/eim_indices'%(lmode,mmode)][:]
+    # B matrix
+    B_amp=np.transpose(f['l%s_m%s/B'%(lmode,mmode)][:])
+    # spline fit info : degree of the spline
+    degree=f['l%s_m%s/degree'%(lmode,mmode)][:]
+    # spline fit info : knots used in spline fit
+    knots_amp=f['l%s_m%s/spline_knots_amp'%(lmode,mmode)][:]
+    # spline fit info : values at the knots
+    h_spline_amp=f['l%s_m%s/fitparams_amp'%(lmode,mmode)][:]
+    # combine spline info
+    h_eim_amp_spline=[(knots_amp[flag], h_spline_amp[flag],int(degree)) for flag 
+                      in range(len(eim_indicies_amp))]
+    
+    return eim_indicies_amp, B_amp, h_eim_amp_spline
+ 
+#----------------------------------------------------------------------------------------------------
+def read_phase_fits(f, lmode, mmode):
+    """
+    Read fit info for the phase of 22 mode
+    """
+
+    # EIM nodes
+    eim_indicies_ph=f['l%s_m%s/eim_indices_phase'%(lmode,mmode)][:]
+    # B matrix
+    B_ph=np.transpose(f['l%s_m%s/B_phase'%(lmode,mmode)][:])
+    # spline fit info : degree of the spline
+    degree=f['l%s_m%s/degree'%(lmode,mmode)][:]
+    # spline fit info : knots used in spline fit
+    knots_ph=f['l%s_m%s/spline_knots_phase'%(lmode,mmode)][:]
+    # spline fit info : values at the knots
+    h_spline_ph=f['l%s_m%s/fitparams_phase'%(lmode,mmode)][:]
+    # combine spline info
+    h_eim_ph_spline=[(knots_ph[flag], h_spline_ph[flag],int(degree)) for flag 
+                     in range(len(eim_indicies_ph))]
+    
+    return eim_indicies_ph, B_ph, h_eim_ph_spline
+
+#----------------------------------------------------------------------------------------------------
+def read_real_part_fits(f, lmode, mmode):
+    """
+    Read fit info for the real part of higher modes (in coorbital phase)
+    """
+
+    # EIM nodes
+    eim_indicies_re=f['l%s_m%s/eim_indices'%(lmode,mmode)][:]
+    # B matrix
+    B_re=np.transpose(f['l%s_m%s/B'%(lmode,mmode)][:])
+    # spline fit info : degree of the spline
+    degree=f['l%s_m%s/degree'%(lmode,mmode)][:]
+    # spline fit info : knots used in spline fit
+    knots_re=f['l%s_m%s/spline_knots_re'%(lmode,mmode)][:]
+    # spline fit info : values at the knots
+    h_spline_re=f['l%s_m%s/fitparams_re'%(lmode,mmode)][:]
+    # combine spline info
+    h_eim_re_spline=[(knots_re[flag], h_spline_re[flag],int(degree)) for 
+                                  flag in range(len(eim_indicies_re))]
+    
+    return eim_indicies_re, B_re, h_eim_re_spline
+
+
+#----------------------------------------------------------------------------------------------------
+def read_imag_part_fits(f, lmode, mmode):
+    """
+    Read fit info for the real part of higher modes (in coorbital phase)
+    """
+
+    # EIM nodes
+    eim_indicies_im=f['l%s_m%s/eim_indices_im'%(lmode,mmode)][:]
+    # B matrix
+    B_im=np.transpose(f['l%s_m%s/B_im'%(lmode,mmode)][:])
+    # spline fit info : degree of the spline
+    degree=f['l%s_m%s/degree'%(lmode,mmode)][:]
+    # spline fit info : knots used in spline fit
+    knots_im=f['l%s_m%s/spline_knots_im'%(lmode,mmode)][:]
+    # spline fit info : values at the knots
+    h_spline_im=f['l%s_m%s/fitparams_im'%(lmode,mmode)][:]
+    # combine spline info
+    h_eim_im_spline=[(knots_im[flag], h_spline_im[flag],int(degree)) for 
+                                  flag in range(len(eim_indicies_im))]
+    
+    return eim_indicies_im, B_im, h_eim_im_spline
+
+
+#----------------------------------------------------------------------------------------------------
+def read_times(f, lmode, mmode):
+    """
+    Read fit info for the phase of 22 mode
+    """
+    # time
+    time=f['l%s_m%s/times'%(lmode,mmode)][:]
+    
+    return time
+
+
+#----------------------------------------------------------------------------------------------------
 def load_surrogate(h5_data_dir):
     
     """ 
     Loads all interpolation data for the following modes
-    modes=[(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),(8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
+    modes=[(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),
+          (5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),
+          (8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
     Assumes the file BHPTNRSur1dq1e4.h5 is located in the same directory as this file.
     """
     
+    # chech if the h5file is the most recent one or if it is corrupted
     file_hash = md5('BHPTNRSur1dq1e4.h5',h5_data_dir)
     zenodo_current_hash = "58a3a75e8fd18786ecc88cf98f694d4a"
 
     if file_hash != zenodo_current_hash:
-        raise AttributeError("EMRISur1dq1e4.h5 out of date.\n Please download new version from https://zenodo.org/record/7125742")
+        raise AttributeError("EMRISur1dq1e4.h5 out of date.\n \
+                             Please download new version from https://zenodo.org/record/7125742")
 
-
+    # read all fit info
     with h5py.File('%s/BHPTNRSur1dq1e4.h5'%h5_data_dir, 'r') as f:
 
+        # modes to read
         modes = [(2,2),(2,1),
-                   (3,1),(3,2),(3,3),
-                   (4,2),(4,3),(4,4),
-                   (5,3),(5,4),(5,5),
-                   (6,4),(6,5),(6,6),
-                   (7,5),(7,6),(7,7),
-                   (8,6),(8,7),(8,8),
-                   (9,7),(9,8),(9,9),
-                   (10,8),(10,9)]
+                 (3,1),(3,2),(3,3),
+                 (4,2),(4,3),(4,4),
+                 (5,3),(5,4),(5,5),
+                 (6,4),(6,5),(6,6),
+                 (7,5),(7,6),(7,7),
+                 (8,6),(8,7),(8,8),
+                 (9,7),(9,8),(9,9),
+                 (10,8),(10,9)]
 
 
-        # fit info
-        h_eim_re_spline_dict = {}
-        h_eim_im_spline_dict = {}
-        B_re_dict = {}
-        B_im_dict = {}
-        eim_indicies_im_dict = {}
-        eim_indicies_re_dict = {}
+        # we will save the fit info in dictionary for the higher order modes
+        h_eim_re_spline_dict, h_eim_im_spline_dict = {}, {}
+        B_re_dict, B_im_dict  = {}, {}
+        eim_indicies_im_dict, eim_indicies_re_dict = {}, {}
 
+        # loop over all modes
         for mode in modes:
 
             lmode,mmode=mode
-
+            # read time data
+            time = read_times(f, lmode, mmode)
+            
+            # special treatment for 22 mode; we model the mode with amp/phase decompositon
+            # so we will use arrays to store the fit info
             if mode==(2,2):
+                # read amplitude fits
+                eim_indicies_amp, B_amp, h_eim_amp_spline = read_amplitude_fits(f, lmode, mmode)
+                # read phase fits
+                eim_indicies_ph, B_ph, h_eim_ph_spline = read_phase_fits(f, lmode, mmode)
 
-                eim_indicies_amp_dataset=f['l%s_m%s/eim_indices'%(lmode,mmode)]
-                eim_indicies_amp=eim_indicies_amp_dataset[:]
-                eim_indicies_ph_dataset=f['l%s_m%s/eim_indices_phase'%(lmode,mmode)]
-                eim_indicies_ph=eim_indicies_ph_dataset[:]
-                B_ph_dataset=f['l%s_m%s/B_phase'%(lmode,mmode)]
-                B_ph=np.transpose(B_ph_dataset[:])
-                B_amp_dataset=f['l%s_m%s/B'%(lmode,mmode)]
-                B_amp=np.transpose(B_amp_dataset[:])
-                time_dataset=f['l%s_m%s/times'%(lmode,mmode)]
-                time=time_dataset[:]
-                degree_dataset=f['l%s_m%s/degree'%(lmode,mmode)]
-                degree=degree_dataset[:]
-                knots_dataset_amp=f['l%s_m%s/spline_knots_amp'%(lmode,mmode)]
-                knots_amp=knots_dataset_amp[:]
-                knots_dataset_ph=f['l%s_m%s/spline_knots_phase'%(lmode,mmode)]
-                knots_ph=knots_dataset_ph[:]
-                h_spline_amp_dataset=f['l%s_m%s/fitparams_amp'%(lmode,mmode)]
-                h_spline_amp=h_spline_amp_dataset[:]
-                h_spline_ph_dataset=f['l%s_m%s/fitparams_phase'%(lmode,mmode)]
-                h_spline_ph=h_spline_ph_dataset[:]
-
-                h_eim_amp_spline=[(knots_amp[flag], h_spline_amp[flag],int(degree)) for flag in range(len(eim_indicies_amp))]
-                h_eim_ph_spline=[(knots_ph[flag], h_spline_ph[flag],int(degree)) for flag in range(len(eim_indicies_ph))]
-
+            # read other modes
+            # these modes have been modelled with real/imag decompositon
+            # we will use dictionary to save the fit info for all modes
             else:
-
-                eim_indicies_re_dataset=f['l%s_m%s/eim_indices'%(lmode,mmode)]
-                eim_indicies_re_dict[(mode)]=eim_indicies_re_dataset[:]
-                eim_indicies_im_dataset=f['l%s_m%s/eim_indices_im'%(lmode,mmode)]
-                eim_indicies_im_dict[(mode)]=eim_indicies_im_dataset[:]
-                B_im_dataset=f['l%s_m%s/B_im'%(lmode,mmode)]
-                B_im_dict[(mode)]=np.transpose(B_im_dataset[:])
-                B_re_dataset=f['l%s_m%s/B'%(lmode,mmode)]
-                B_re_dict[(mode)]=np.transpose(B_re_dataset[:])
-                time_dataset=f['l%s_m%s/times'%(lmode,mmode)]
-                time=time_dataset[:]
-                degree_dataset=f['l%s_m%s/degree'%(lmode,mmode)]
-                degree=degree_dataset[:]
-                knots_dataset_re=f['l%s_m%s/spline_knots_re'%(lmode,mmode)]
-                knots_re=knots_dataset_re[:]
-                knots_dataset_im=f['l%s_m%s/spline_knots_im'%(lmode,mmode)]
-                knots_im=knots_dataset_im[:]
-                h_spline_re_dataset=f['l%s_m%s/fitparams_re'%(lmode,mmode)]
-                h_spline_re=h_spline_re_dataset[:]
-                h_spline_im_dataset=f['l%s_m%s/fitparams_im'%(lmode,mmode)]
-                h_spline_im=h_spline_im_dataset[:]
-
-                h_eim_re_spline_dict[(mode)]=[(knots_re[flag], h_spline_re[flag],int(degree)) for flag in range(len(eim_indicies_re_dict[(mode)]))]
-                h_eim_im_spline_dict[(mode)]=[(knots_im[flag], h_spline_im[flag],int(degree)) for flag in range(len(eim_indicies_im_dict[(mode)]))]
-           
+                # read real part fits
+                eim_indicies_re_dict[(mode)], B_re_dict[(mode)], h_eim_re_spline_dict[(mode)] \
+                                                                = read_real_part_fits(f, lmode, mmode)
+                # read imag part fits
+                eim_indicies_im_dict[(mode)], B_im_dict[(mode)], h_eim_im_spline_dict[(mode)] \
+                                                                = read_imag_part_fits(f, lmode, mmode)
+                
         # nr calibration info
+        # read the coefficients for alpha
         alpha_coeffs = {}
         for mode in [(2,2),(3,3),(4,4),(5,5)]:
             alpha_coeffs[mode] = f["nr_calib_params/(%d,%d)"%(mode[0],mode[1])]['alpha'][:]
+        # read the coefficients for beta
         beta_coeffs = f["nr_calib_params/(2,2)"]['beta'][:]
 
-    return time, \
-        eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph_spline, \
-        eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, h_eim_im_spline_dict,\
-        alpha_coeffs, beta_coeffs
-    
+    return time, eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph_spline, \
+        eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, \
+        h_eim_im_spline_dict, alpha_coeffs, beta_coeffs
