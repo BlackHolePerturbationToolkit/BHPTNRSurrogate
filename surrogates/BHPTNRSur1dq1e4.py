@@ -33,7 +33,8 @@ time, eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph
 eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, h_eim_im_spline_dict,\
 alpha_coeffs, beta_coeffs = load.load_surrogate(h5_data_dir)
 
-#---------------------------------------------------------------------------------------------------- 
+#----------------------------------------------------------------------------------------------------
+# add docstring from utility
 @docs.copy_doc(docs.generic_doc_for_models,docs.BHPTNRSur1dq1e4_doc)
 def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None, M_tot=None, \
                        dist_mpc=None, orb_phase=None, inclination=None, neg_modes=True, \
