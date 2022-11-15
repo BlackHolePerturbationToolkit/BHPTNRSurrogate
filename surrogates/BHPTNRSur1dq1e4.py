@@ -18,138 +18,66 @@ import subprocess
 
 import model_utils.BHPTNRSur1dq1e4.load_surrogate_fits as load
 import model_utils.BHPTNRSur1dq1e4.generate_raw_surrogate as raw_sur
-import model_utils.BHPTNRSur1dq1e4.nr_calibration as nrcal
 import common_utils.utils as utils
+import common_utils.fits as fits
+import common_utils.nr_calibration as nrcalib
+import common_utils.check_inputs as checks
+import common_utils.doc_string as docs
 
 
 # h5 data directory
 h5_data_dir = os.path.dirname(os.path.abspath(__file__)) + '/../data'
+
 # load all fits data
 time, eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph_spline, \
-eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, h_eim_im_spline_dict, alpha_coeffs, beta_coeffs = load.load_surrogate(h5_data_dir)
+eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, h_eim_im_spline_dict,\
+alpha_coeffs, beta_coeffs = load.load_surrogate(h5_data_dir)
 
 #---------------------------------------------------------------------------------------------------- 
-def generate_surrogate(q, modes=None, M_tot=None, dist_mpc=None, orb_phase=None, inclination=None, neg_modes=True, mode_sum=False, lmax=5, calibrated=True):
-    """ 
-    Description : Top-level function to generate surrogate waveform in either geometric or physical units
+@docs.copy_doc(docs.generic_doc_for_models,docs.BHPTNRSur1dq1e4_doc)
+def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None, M_tot=None, \
+                       dist_mpc=None, orb_phase=None, inclination=None, neg_modes=True, \
+                       mode_sum=False, lmax=5, calibrated=True):
     
-    Input
-    =====
-    q:      mass ratio
+    # check inputs
+    checks.check_user_inputs(modes, M_tot, dist_mpc, orb_phase, inclination, mode_sum)
     
-    modes:  list of modes
-            Default (None) corresponds to all available modes in the model
-
-            [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),
-             (5,3),(5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),
-             (7,7),(8,6),(8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
-            
-    M_tot:     total mass of the binary in solar masses
-               Default: None (in which case a geometric waveform is returned)
-    
-    dist_mpc:  distance of the binary from the observer in Mpc
-               Default: None (in which case geometric wf is returned)
-               
-    orb_phase: orbital phase
-    
-    inclination: inclination angle
-    
-    lmax:  5 (default)
-           Modes upto l=5 are NR calibrated. Modes l>6 are uncalibrated
-           Note: If one provides a list of modes, modes beyond lmax 
-                 will not be returned
-            
-    mode_sum:  If true, all modes are summed. If false all modes are returned 
-               in a dictionary. Default: false
-               Note: Only works when orb_phase and inclination are not None
-               
-    calibrated:  Whether you want NR-calibrated waveform or not
-                 When set to True, it applies a scaling to the uncalibrated
-                 surrogate waveform. This scaling has been obtained by calibrating
-                 the ppBHPT waveforms to NR in comparable mass ratio
-                 regime (3<=q<=9). If set to False, the raw (uncalibrated)
-                 ppBHPT waveforms are returned.
-                 Default: True
-
-                 
-    Output
-    ======
-    t : time
-    h : waveform modes as a dictionary
-
-
-    Example Uses:
-    =============
-    1. to obtain uncalibrated (raw) geometric waveform
-            t, h = generate_surrogate(q=8, modes=[(2,1),(2,2),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5)], calibrated=False)
-    2. to obtain NR Calibrated geometric waveform
-            t, h = generate_surrogate(q=8, modes=mode_list)       
-    3. to obtain NR calibrated physical waveform
-            t, h = generate_surrogate(q=q, modes=mode_list, M_tot=50, dist_mpc=100)
-    4. to obtain NR calibrated physical waveform on a sphere
-            t, h = generate_surrogate(q=q, modes=mode_list, M_tot=50, dist_mpc=100, orb_phase=np.pi/3, inclination=np.pi/4)
-    5. to obtain NR calibrated physical waveform on a sphere for modes up to l=5
-            t, h = generate_surrogate(q=q, modes=mode_list, M_tot=50, dist_mpc=100, orb_phase=np.pi/3, inclination=np.pi/4, lmax=5)
-    6. to obtain mode-summed NR calibrated physical waveform on a sphere
-            t, h = generate_surrogate(q=8, M_tot=60, dist_mpc=100, orb_phase=np.pi/3, inclination=np.pi/4, lmax=3, mode_sum=True)
-         
-            
-    """
-
-    if (M_tot is None) ^ (dist_mpc is None):
-        raise ValueError("Either specify both M_tot and dist_mpc, or neither")
-    
+    # modes
     if modes==None:
-        modes=[(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),(8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
+        modes=[(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5),
+               (6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),(8,7),(8,8),(9,7),(9,8),
+               (9,9),(10,8),(10,9)]
         
+    
+    # define the parameterization for surrogate
+    X_sur = np.log10(q)
+    
+    # define parameterization for nr calibration
+    X_calib = 1/q
+    
+    # normalization parameter to be multiplied with the surrogate waveform
+    norm = 1/q
+    
+    # domain of validity
+    X_min = [2.5]
+    X_max = [10000]
+    X_bounds = [X_min, X_max]
+
+    # fit type
+    fit_func = 'spline_1d'
+    
+    # nr calibratiin function
+    alpha_beta_functional_form = nrcalib.alpha_beta_BHPTNRSur1dq1e4
+    
     # uncalibrated waveforms in geometric units
-    hsur_raw_dict = raw_sur.all_modes_surrogate(modes, q,
+    hsur_raw_dict = raw_sur.all_modes_surrogate(modes, X_sur,
               eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph_spline,
-              eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, h_eim_im_spline_dict,
-              lmax, calibrated)
+              eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, 
+              h_eim_im_spline_dict, lmax, fit_func, norm)
     
-    if calibrated==True:
-        t_sur, hsur_dict = nrcal.generate_calibrated_ppBHPT(q, time, hsur_raw_dict, alpha_coeffs, beta_coeffs)
-        if lmax>5:
-            print('WARNING : only modes up to \ell=5 are NR calibrated')
-    else:
-        t_sur=np.array(time)
-        hsur_dict = hsur_raw_dict
-        print('WARNING : modes are NOT NR calibrated - waveforms only have 0PA contribution')
+    # process the raw surrogate output depending on the user inputs
+    t_surrogate, h_surrogate = utils.obtain_processed_output(X_calib, time, hsur_raw_dict, alpha_coeffs, 
+                                    beta_coeffs, alpha_beta_functional_form, calibrated,
+                                    M_tot, dist_mpc, orb_phase, inclination, mode_sum, neg_modes, lmax)
     
-    # get all the negative m modes using symmetry
-    if neg_modes:
-        hsur_dict = utils.generate_negative_m_mode(hsur_dict)
-            
-        
-    # relevant for obtaining physical waveforms
-    if M_tot is not None and dist_mpc is not None:
-        
-        t_sur, hsur_dict = utils.geo_to_SI(t_sur, hsur_dict, M_tot, dist_mpc)
-        # evaluate on the sphere
-        if orb_phase is not None and inclination is not None:
-            hsur_dict = utils.evaluate_on_sphere(inclination, orb_phase, hsur_dict)
-                
-        # add checks
-        elif orb_phase is not None and inclination is None:
-                raise ValueError("Both orb_phase and inclination should be None! Or both should have physical values to generate physical waveform")    
-        elif orb_phase is None and inclination is not None:
-                raise ValueError("Both orb_phase and inclination should be None! Or both should have physical values to generate physical waveform")
-                         
-    # add checks    
-    elif M_tot is not None and dist_mpc is None:
-        raise ValueError("Both M_tot and dist_mpc should be None! Or both should have physical values to generate physical waveform")
-    elif M_tot is None and dist_mpc is not None:
-        raise ValueError("Both M_tot and dist_mpc should be None! Or both should have physical values to generate physical waveform")
-    
-    
-    # whether to output mode contribution summed up
-    if mode_sum==False:
-        return t_sur, hsur_dict
-    else:
-        if M_tot is not None and dist_mpc is not None and orb_phase is not None and inclination is not None:
-            h_summed = utils.sum_modes(hsur_dict)
-            return t_sur, h_summed
-        else:
-            raise ValueError("M_tot, dist_mpc, orb_phase and inclination should NOT be None")
-            
+    return t_surrogate, h_surrogate
