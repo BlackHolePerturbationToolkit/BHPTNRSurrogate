@@ -8,6 +8,7 @@ import numpy as np
 import scipy
 from scipy.interpolate import splrep, splev
 from . import utils
+from .eval_pysur import evaluate_fit as evaluate_GPR
 
 #----------------------------------------------------------------------------------------------------
 def evaluate_GPR_at_EIM_nodes(X, fit_data):
