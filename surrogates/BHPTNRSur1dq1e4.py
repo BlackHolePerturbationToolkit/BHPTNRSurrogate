@@ -12,7 +12,6 @@ import model_utils.load_surrogates as load
 import model_utils.eval_surrogates as eval_sur
 from common_utils import utils, fits
 import common_utils.nr_calibration as nrcalib
-import common_utils.check_inputs as checks
 import common_utils.doc_string as docs
 
 # h5 data directory
@@ -52,10 +51,6 @@ def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None
     X_max = [np.log10(10000)]
     X_bounds = [X_min, X_max]
     
-    # check inputs
-    checks.check_user_inputs(X_sur, X_bounds, modes, modes_available, M_tot, dist_mpc, 
-                      orb_phase, inclination, mode_sum)
-    
     # fit type
     fit_func = 'spline_1d'
     
@@ -70,9 +65,9 @@ def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None
     CoorbToInert = True
     
     # generate surrogate waveform
-    t_surrogate, h_surrogate = eval_sur.evaluate_surrogate(X_sur, X_calib, time, modes, alpha_coeffs, \
-                                        beta_coeffs, alpha_beta_functional_form, calibrated, M_tot,\
-                                        dist_mpc, orb_phase, inclination, fit_data_dict_1, \
+    t_surrogate, h_surrogate = eval_sur.evaluate_surrogate(X_sur, X_calib, X_bounds, time, modes, 
+                                        modes_available, alpha_coeffs,  beta_coeffs, alpha_beta_functional_form,\
+                                        calibrated, M_tot, dist_mpc, orb_phase, inclination, fit_data_dict_1, \
                                         fit_data_dict_2, B_dict_1, B_dict_2, fit_func, decomposition_funcs,\
                                         norm, mode_sum, neg_modes, lmax, CoorbToInert)
     
