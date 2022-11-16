@@ -49,7 +49,7 @@ def evaluate_datapiece(X, fit_data, B, fit_func):
 
 #----------------------------------------------------------------------------------------------------
 def evaluate_surrogate_mode(X, fit_data_1, fit_data_2, B_datapiece_1, B_datapiece_2, 
-                            fit_func, norm, mode=None, orbital_phase=None):
+                            fit_func, decomposition_func, norm):
     """ Compute the interpolated waveform for a single mode : higher order modes"""
     
     # evaluate first datapiece e.g amplitude / real part of wf
@@ -57,16 +57,47 @@ def evaluate_surrogate_mode(X, fit_data_1, fit_data_2, B_datapiece_1, B_datapiec
     # evaluate second datapiece e.g phase / imag part of wf
     h_approx_datapiece_2 = evaluate_datapiece(X,  fit_data_2, B_datapiece_2, fit_func)
     
-    # if orbital phase is given, we combine amp/phase to full wf
-    if orbital_phase is None:
-        h_approx =  utils.amp_ph_to_comp(h_approx_datapiece_1, h_approx_datapiece_2) 
-    # combine real/imag to full wf, requires orbital phase information
-    else:
-        (l,m) = mode
-        h_approx =  utils.re_im_to_comp(h_approx_datapiece_1, h_approx_datapiece_2,  m, 
-                                        orbital_phase) 
-        
+    # combine datapieces to obtain full wf either in the inertial frame or in the
+    # coorbital frame; at this stage, the waveforms are rertured in their respective
+    # frames where models have been built e.g. inertial for 22 or coorbital for HMs
+    # in case of BHPTNRSur1dq1e4
+    h_approx =  decomposition_func(h_approx_datapiece_1, h_approx_datapiece_2)
+    
     # needed to match convention of other surrogate models
+    # multiply surrogate amplitude with overall normalization factor
     h_approx = np.conj(np.array(h_approx))*norm
     
     return h_approx
+
+
+#----------------------------------------------------------------------------------------------------
+def all_modes_surrogate(modes, X_input, fit_data_dict_1, fit_data_dict_2, \
+                        B_dict_1, B_dict_2, lmax, fit_func, decomposition_funcs, norm):
+
+    """ Takes the fit data (either from splines or GPR), matrix B and computes the 
+        interpolated waveform for all modes """
+    
+    # dictionary to save waveform
+    h_approx_dict={}
+    # evaluate all the modes     
+    for mode in modes:
+        (l,m) = mode
+        # load modes only upto l=lmax
+        if l<=lmax:
+            # get the fit data for specific mode for both the datapieces
+            fit_data_1 = fit_data_dict_1[mode]
+            fit_data_2 = fit_data_dict_2[mode]
+            
+            # read the decompositon function for the modes; special treatment for the
+            # 22 mode and higher order modes
+            if mode==(2,2):
+                decomposition_func = decomposition_funcs[0]
+            else:
+                decomposition_func = decomposition_funcs[1]
+    
+            # evaluate surrogate modes
+            h_approx_dict[(mode)] = evaluate_surrogate_mode(X_input, fit_data_1, fit_data_2, 
+                                                            B_dict_1[(mode)], B_dict_2[(mode)], 
+                                                            fit_func, decomposition_func, norm)
+                
+    return h_approx_dict
