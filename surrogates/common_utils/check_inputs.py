@@ -1,5 +1,5 @@
 ##==============================================================================
-## BHPTNRSur1dq1e4 : arXiv:2204.01972
+## BHPTNRSurrogate module
 ## Description : checks whether the user inputs are correct to generate a waveform
 ## Author : Tousif Islam, Aug 2022 [tislam@umassd.edu / tousifislam24@gmail.com]
 ##==============================================================================

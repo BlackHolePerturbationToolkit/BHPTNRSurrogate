@@ -1,5 +1,5 @@
 ##==============================================================================
-## BHPTNRSur1dq1e4 : arXiv:2204.01972
+## BHPTNRSurrogate module
 ## Description : docs for different surrogate model wrappers
 ## Author : Tousif Islam, Nov 2022 [tislam@umassd.edu / tousifislam24@gmail.com]
 ##==============================================================================

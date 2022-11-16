@@ -1,6 +1,6 @@
 ##==============================================================================
-## BHPTNRSur1dq1e4 : arXiv:2204.01972
-## Description : utility file for surrogate model
+## BHPTNRSurrogate module
+## Description : evaluates the (spline or GPR) surrogate model
 ## Author : Tousif Islam, Nov 2022 [tislam@umassd.edu / tousifislam24@gmail.com]
 ##==============================================================================
 
