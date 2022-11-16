@@ -8,7 +8,8 @@ import numpy as np
 import os
 from os import path
 
-import model_utils.BHPTNRSur1dq1e4.load_surrogate_fits as load
+import model_utils.load_surrogates as load
+import model_utils.eval_surrogates as eval_sur
 from common_utils import utils, fits
 import common_utils.nr_calibration as nrcalib
 import common_utils.check_inputs as checks
@@ -19,7 +20,7 @@ h5_data_dir = os.path.dirname(os.path.abspath(__file__)) + '/../data'
 
 # load all fits data
 time, fit_data_dict_1, fit_data_dict_2, B_dict_1, B_dict_2, \
-                            alpha_coeffs, beta_coeffs = load.load_surrogate(h5_data_dir)
+                            alpha_coeffs, beta_coeffs = load.load_BHPTNRSur1dq1e4_surrogate(h5_data_dir)
 
 #----------------------------------------------------------------------------------------------------
 # add docstring from utility
@@ -65,13 +66,11 @@ def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None
     # to inertial frame
     CoorbToInert = True
     
-    # uncalibrated waveforms in geometric units
-    hsur_raw_dict = fits.all_modes_surrogate(modes, X_sur, fit_data_dict_1, fit_data_dict_2, \
-                           B_dict_1, B_dict_2, lmax, fit_func, decomposition_funcs, norm)
-    
-    # process the raw surrogate output depending on the user inputs
-    t_surrogate, h_surrogate = utils.obtain_processed_output(X_calib, time, hsur_raw_dict, alpha_coeffs, 
-                                    beta_coeffs, alpha_beta_functional_form, calibrated, M_tot, dist_mpc, 
-                                    orb_phase, inclination, mode_sum, neg_modes, lmax, CoorbToInert)
+    # generate surrogate waveform
+    t_surrogate, h_surrogate = eval_sur.evaluate_surrogate(X_sur, X_calib, time, modes, alpha_coeffs, \
+                                        beta_coeffs, alpha_beta_functional_form, calibrated, M_tot,\
+                                        dist_mpc, orb_phase, inclination, fit_data_dict_1, \
+                                        fit_data_dict_2, B_dict_1, B_dict_2, fit_func, decomposition_funcs,\
+                                        norm, mode_sum, neg_modes, lmax, CoorbToInert)
     
     return t_surrogate, h_surrogate
