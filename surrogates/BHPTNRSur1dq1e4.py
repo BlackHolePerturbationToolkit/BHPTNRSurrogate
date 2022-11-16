@@ -29,16 +29,15 @@ def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None
                        dist_mpc=None, orb_phase=None, inclination=None, neg_modes=True, \
                        mode_sum=False, lmax=5, calibrated=True):
     
-    # check inputs
-    checks.check_user_inputs(modes, M_tot, dist_mpc, orb_phase, inclination, mode_sum)
-    
-    # modes
-    if modes==None:
-        modes=[(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5),
+    # modes modelled in the surrogate
+    modes_available = [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5),
                (6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),(8,7),(8,8),(9,7),(9,8),
                (9,9),(10,8),(10,9)]
-        
     
+    # modes requested
+    if modes==None:
+        modes = modes_available
+        
     # define the parameterization for surrogate
     X_sur = np.log10(q)
     
@@ -49,10 +48,14 @@ def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None
     norm = 1/q
     
     # domain of validity
-    X_min = [2.5]
-    X_max = [10000]
+    X_min = [np.log10(2.5)]
+    X_max = [np.log10(10000)]
     X_bounds = [X_min, X_max]
-
+    
+    # check inputs
+    checks.check_user_inputs(X_sur, X_bounds, modes, modes_available, M_tot, dist_mpc, 
+                      orb_phase, inclination, mode_sum)
+    
     # fit type
     fit_func = 'spline_1d'
     
