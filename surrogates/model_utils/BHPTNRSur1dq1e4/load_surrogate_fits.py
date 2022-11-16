@@ -121,7 +121,7 @@ def read_imag_part_fits(f, lmode, mmode):
 #----------------------------------------------------------------------------------------------------
 def read_times(f, lmode, mmode):
     """
-    Read fit info for the phase of 22 mode
+    Read fit info / time
     """
     # time
     time=f['l%s_m%s/times'%(lmode,mmode)][:]
@@ -163,11 +163,11 @@ def load_surrogate(h5_data_dir):
                  (10,8),(10,9)]
 
 
-        # we will save the fit info in dictionary for the higher order modes
-        h_eim_re_spline_dict, h_eim_im_spline_dict = {}, {}
-        B_re_dict, B_im_dict  = {}, {}
-        eim_indicies_im_dict, eim_indicies_re_dict = {}, {}
-
+        # we will save the fit info for two datapieces
+        # in dictionary for all modes
+        B_dict_1, B_dict_2  = {}, {}
+        fit_data_dict_1, fit_data_dict_2 = {}, {}
+        
         # loop over all modes
         for mode in modes:
 
@@ -179,20 +179,27 @@ def load_surrogate(h5_data_dir):
             # so we will use arrays to store the fit info
             if mode==(2,2):
                 # read amplitude fits
-                eim_indicies_amp, B_amp, h_eim_amp_spline = read_amplitude_fits(f, lmode, mmode)
+                eim_indicies_1, B_dict_1[(mode)], h_eim_spline_1 \
+                                                                = read_amplitude_fits(f, lmode, mmode)
                 # read phase fits
-                eim_indicies_ph, B_ph, h_eim_ph_spline = read_phase_fits(f, lmode, mmode)
+                eim_indicies_2, B_dict_2[(mode)], h_eim_spline_2 \
+                                                                = read_phase_fits(f, lmode, mmode)
 
             # read other modes
             # these modes have been modelled with real/imag decompositon
             # we will use dictionary to save the fit info for all modes
             else:
                 # read real part fits
-                eim_indicies_re_dict[(mode)], B_re_dict[(mode)], h_eim_re_spline_dict[(mode)] \
+                eim_indicies_1, B_dict_1[(mode)], h_eim_spline_1 \
                                                                 = read_real_part_fits(f, lmode, mmode)
                 # read imag part fits
-                eim_indicies_im_dict[(mode)], B_im_dict[(mode)], h_eim_im_spline_dict[(mode)] \
+                eim_indicies_2, B_dict_2[(mode)], h_eim_spline_2 \
                                                                 = read_imag_part_fits(f, lmode, mmode)
+            
+            # now combine eim_spline and eim_indicies values to get the full fit data for 
+            # all modes - this cleans up the code significantly
+            fit_data_dict_1[mode] = [h_eim_spline_1, eim_indicies_1]
+            fit_data_dict_2[mode] = [h_eim_spline_2, eim_indicies_2]
                 
         # nr calibration info
         # read the coefficients for alpha
@@ -202,6 +209,4 @@ def load_surrogate(h5_data_dir):
         # read the coefficients for beta
         beta_coeffs = f["nr_calib_params/(2,2)"]['beta'][:]
 
-    return time, eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph_spline, \
-        eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, \
-        h_eim_im_spline_dict, alpha_coeffs, beta_coeffs
+    return time, fit_data_dict_1, fit_data_dict_2, B_dict_1, B_dict_2, alpha_coeffs, beta_coeffs
