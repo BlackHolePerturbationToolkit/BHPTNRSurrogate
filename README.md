@@ -18,6 +18,10 @@ The latest development version will always be available from the project git
 repository:
 ```bash
 git clone https://github.com/BlackHolePerturbationToolkit/BHPTNRSurrogate.git
+
+git submodule init
+
+git submodule update
 ```
 
 ## Available Models
