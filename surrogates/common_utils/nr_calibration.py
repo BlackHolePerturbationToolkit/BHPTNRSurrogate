@@ -20,7 +20,10 @@ def evaluate_alpha(X, l, coefs_alpha, alpha_beta_functional_form):
         Computes alpha value at a given point in the paprameter space
     """
     
-    if l<=5:
+    # find out the max value of \ell upto which modes are nr calibrated
+    lmax_nrcalib = max([x[0] for x in coefs_alpha.keys()])
+    
+    if l<=lmax_nrcalib:
         alpha = alpha_beta_functional_form(X, coefs_alpha[(l,l)][0], coefs_alpha[(l,l)][1], 
                                            coefs_alpha[(l,l)][2], coefs_alpha[(l,l)][3])
     else:
@@ -43,8 +46,6 @@ def evaluate_beta(X, coefs_beta, alpha_beta_functional_form):
 def alpha_scaling_h(h_raw, alpha):
     """ Implements alpha-beta-scaling to the strain
         Rescales the strain
-        The model is only calibrated up to l=5
-        For modes with l>5, we provide 'uncalibrated perturbation waveform'
     """
     
     return np.array(h_raw)*alpha
