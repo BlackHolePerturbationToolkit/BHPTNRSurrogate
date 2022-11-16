@@ -19,7 +19,7 @@ def md5(fname, h5_data_dir, zenodo_ID):
         print('%s file is not found in the directory - PATH-TO/BHPTNRSurrogate/data/'%(fname))
         print('... downloading h5 file from zenodo')
         print('... this might take some time')
-        os.system('wget https://zenodo.org/record/%s/files/%s -P %s'%(zenodo_ID,h5_data_dir,fname))
+        os.system('wget https://zenodo.org/record/%s/files/%s -P %s'%(zenodo_ID, fname, h5_data_dir))
         print('... downloaded')
     
     hash_md5 = hashlib.md5()
