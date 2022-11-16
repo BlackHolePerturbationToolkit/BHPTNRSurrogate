@@ -5,12 +5,14 @@
 ##==============================================================================
 
 from common_utils import utils, fits
+import common_utils.check_inputs as checks
 
 #----------------------------------------------------------------------------------------------------
-def evaluate_surrogate(X_sur, X_calib, time, modes, alpha_coeffs, beta_coeffs, alpha_beta_functional_form,\
-                       calibrated, M_tot, dist_mpc, orb_phase, inclination, fit_data_dict_1, \
-                       fit_data_dict_2, B_dict_1, B_dict_2, fit_func, decomposition_funcs, norm, \
-                       mode_sum, neg_modes, lmax, CoorbToInert):
+def evaluate_surrogate(X_sur, X_calib, X_bounds, time, modes, modes_available, alpha_coeffs,\
+                       beta_coeffs, alpha_beta_functional_form, calibrated, M_tot, dist_mpc, 
+                       orb_phase, inclination, fit_data_dict_1, fit_data_dict_2, B_dict_1, \
+                       B_dict_2, fit_func, decomposition_funcs, norm, mode_sum, neg_modes, \
+                       lmax, CoorbToInert):
     """
     Inputs
     ======
@@ -18,9 +20,13 @@ def evaluate_surrogate(X_sur, X_calib, time, modes, alpha_coeffs, beta_coeffs, a
         
         X_calib : array of nr calibration parameterization e.g. [1/q, spin]
 
+        X_bounds : bounds on all parameters - 2D array
+        
         time : array of time on which surrogate has been trained on - read from h5 file
 
         modes : list of modes to evaluate
+        
+        modes_available : available mode in the surrogate
 
         alpha_coeffs : dictionary of alpha values obtained from calibration mode-by-mode
 
@@ -79,6 +85,11 @@ def evaluate_surrogate(X_sur, X_calib, time, modes, alpha_coeffs, beta_coeffs, a
     
      
     """
+    
+    # check inputs
+    checks.check_user_inputs(X_sur, X_bounds, modes, modes_available, M_tot, dist_mpc, 
+                      orb_phase, inclination, mode_sum)
+    
     # uncalibrated waveforms in geometric units
     hsur_raw_dict = fits.all_modes_surrogate(modes, X_sur, fit_data_dict_1, fit_data_dict_2, \
                            B_dict_1, B_dict_2, lmax, fit_func, decomposition_funcs, norm)
