@@ -5,33 +5,21 @@
 ##==============================================================================
 
 import numpy as np
-import matplotlib.pyplot as plt
-import scipy
-from scipy.interpolate import InterpolatedUnivariateSpline as Spline
-from scipy.interpolate import splrep, splev
-import h5py
-import hashlib
-from gwtools import gwtools as _gwtools
 import os
 from os import path
-import subprocess
 
 import model_utils.BHPTNRSur1dq1e4.load_surrogate_fits as load
-import model_utils.BHPTNRSur1dq1e4.generate_raw_surrogate as raw_sur
-import common_utils.utils as utils
-import common_utils.fits as fits
+from common_utils import utils, fits
 import common_utils.nr_calibration as nrcalib
 import common_utils.check_inputs as checks
 import common_utils.doc_string as docs
-
 
 # h5 data directory
 h5_data_dir = os.path.dirname(os.path.abspath(__file__)) + '/../data'
 
 # load all fits data
-time, eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph_spline, \
-eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, h_eim_im_spline_dict,\
-alpha_coeffs, beta_coeffs = load.load_surrogate(h5_data_dir)
+time, fit_data_dict_1, fit_data_dict_2, B_dict_1, B_dict_2, \
+                            alpha_coeffs, beta_coeffs = load.load_surrogate(h5_data_dir)
 
 #----------------------------------------------------------------------------------------------------
 # add docstring from utility
@@ -67,18 +55,23 @@ def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None
     # fit type
     fit_func = 'spline_1d'
     
+    # data decomposition functions for 22 mode and HMs
+    decomposition_funcs = [utils.amp_ph_to_comp, utils.re_im_to_comp]
+    
     # nr calibratiin function
     alpha_beta_functional_form = nrcalib.alpha_beta_BHPTNRSur1dq1e4
     
+    # tell whether the higher modes needed to be transformed from coorbital
+    # to inertial frame
+    CoorbToInert = True
+    
     # uncalibrated waveforms in geometric units
-    hsur_raw_dict = raw_sur.all_modes_surrogate(modes, X_sur,
-              eim_indicies_amp, eim_indicies_ph, B_amp, B_ph, h_eim_amp_spline, h_eim_ph_spline,
-              eim_indicies_re_dict, eim_indicies_im_dict, B_re_dict, B_im_dict, h_eim_re_spline_dict, 
-              h_eim_im_spline_dict, lmax, fit_func, norm)
+    hsur_raw_dict = fits.all_modes_surrogate(modes, X_sur, fit_data_dict_1, fit_data_dict_2, \
+                           B_dict_1, B_dict_2, lmax, fit_func, decomposition_funcs, norm)
     
     # process the raw surrogate output depending on the user inputs
     t_surrogate, h_surrogate = utils.obtain_processed_output(X_calib, time, hsur_raw_dict, alpha_coeffs, 
-                                    beta_coeffs, alpha_beta_functional_form, calibrated,
-                                    M_tot, dist_mpc, orb_phase, inclination, mode_sum, neg_modes, lmax)
+                                    beta_coeffs, alpha_beta_functional_form, calibrated, M_tot, dist_mpc, 
+                                    orb_phase, inclination, mode_sum, neg_modes, lmax, CoorbToInert)
     
     return t_surrogate, h_surrogate
