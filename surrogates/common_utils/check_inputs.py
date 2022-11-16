@@ -7,10 +7,41 @@
 import numpy as np
 
 #---------------------------------------------------------------------------------------------------- 
-def check_user_inputs(modes, M_tot, dist_mpc, orb_phase, inclination, mode_sum):
+def check_input_modes(modes_requested, modes_available):
+    """
+        Checks whether modes requested by the user are avilable in h5 file for the
+        surrogate 
+    """
+    if set(modes_available).issuperset(modes_requested) == True:
+        pass
+    else:
+        raise ValueError("Set of the requested modes is NOT a subset of the \
+                         available modes for the surrogate")
+
+#---------------------------------------------------------------------------------------------------- 
+def check_domain_of_validity(X_in, X_bounds):
+    """
+        Checks whether the user input parameters are within surrogate training
+        space
+    """
+    # if the input X is just a number, make sure to array it up
+    if isinstance(X_in,(list))==False and isinstance(X_in,(float,int))==True:
+        X_in= [X_in]
+    # raise error for all other scenarios
+    else:
+        raise ValueError("param types are not matching with bound types")
+
+    for param_indx in range(len(X_in)):
+        if X_in[param_indx]<X_bounds[0][param_indx] or X_in[param_indx]>X_bounds[1][param_indx]:
+            print("Warning :: input parameter is outside bounds for paramter value at index %d"
+                  %param_indx)
+            print("Warning :: Bounds for this param is [%.1f,%.1f]:"
+                  %(X_bounds[0][param_indx],X_bounds[1][param_indx]))
+        
+#---------------------------------------------------------------------------------------------------- 
+def check_extrinsic_params(M_tot, dist_mpc, orb_phase, inclination, mode_sum):
     """ 
-        Checks whether the user inputs are valid 
-         
+        Checks whether the user inputs are valid    
     """
         
     # geometric or SI units
@@ -26,5 +57,20 @@ def check_user_inputs(modes, M_tot, dist_mpc, orb_phase, inclination, mode_sum):
         if M_tot is None and dist_mpc is None and orb_phase is None and inclination is None:
             raise ValueError("M_tot, dist_mpc, orb_phase and inclination should NOT be None")
             
-    # TOD0 : add a check for domain of validity
             
+#---------------------------------------------------------------------------------------------------- 
+def check_user_inputs(X_in, X_bounds, modes_requested, modes_available, M_tot, dist_mpc, 
+                      orb_phase, inclination, mode_sum):
+    """ 
+        Checks whether the user inputs are valid    
+    """
+        
+    # check extrinsic param inputs make sense
+    check_extrinsic_params(M_tot, dist_mpc, orb_phase, inclination, mode_sum)
+    
+    # check input params lie within the surrogate training space
+    check_domain_of_validity(X_in, X_bounds)
+    
+    # check requested modes exits
+    check_input_modes(modes_requested, modes_available)
+    
