@@ -18,13 +18,30 @@ def amp_ph_to_comp(amp,phase):
     return full_wf
 
 #----------------------------------------------------------------------------------------------------
-def re_im_to_comp(re, im, m, orbital_phase):
+def re_im_to_comp(re, im):
     """ Takes the real and imaginary part of the waveform and
-    combine them to obtain the coorbital frame waveform;
-    then transform the wf into the inertial frame"""
+    combine them to obtain the coorbital frame waveform"""
     
-    full_wf = (re+1j*im)*np.exp(1j*m*np.array(orbital_phase))
+    full_wf = (re+1j*im)
     return full_wf
+
+#----------------------------------------------------------------------------------------------------
+def coorbital_to_inertial(h_coorb):
+    """ Transform the coorbital frame wf into the inertial frame"""
+    
+    h_inertial = {}
+    # 22 mode is in inertial frame and HMs are in coorbital phase
+    for mode in h_coorb.keys():
+        (l,m)=mode
+        if mode==(2,2):
+            # compute orbital phase
+            orbital_phase = np.unwrap(np.angle(h_coorb[mode]))/2
+            h_inertial[mode] = h_coorb[mode]
+        else:
+            # transform HMs to inertial frame
+            h_inertial[mode] = h_coorb[mode]*np.exp(1j*m*np.array(orbital_phase))
+            
+    return h_inertial
 
 #---------------------------------------------------------------------------------------------------- 
 def geo_to_SI(t_geo, h_geo, M_tot, dist_mpc):
@@ -120,15 +137,19 @@ def generate_negative_m_mode(h_dict):
 
 
 #----------------------------------------------------------------------------------------------------
-def obtain_processed_output(X_calib, time, hsur_raw_dict, alpha_coeffs, 
-                            beta_coeffs, alpha_beta_functional_form, calibrated,
-                            M_tot, dist_mpc, orb_phase, inclination, mode_sum, neg_modes, lmax):
+def obtain_processed_output(X_calib, time, hsur_raw_dict, alpha_coeffs, beta_coeffs, 
+                            alpha_beta_functional_form, calibrated, M_tot, dist_mpc, 
+                            orb_phase, inclination, mode_sum, neg_modes, lmax, CoorbToInert=False):
     """
     Function to process the output of raw surrogate to apply :
     (i) NR calibration;
     (ii) Conversion to SI units from geometric units;
     (iii) mode summation;
     """
+    
+    # transform higher modes from coorbital to inertial frame if asked
+    if CoorbToInert==True:
+        hsur_raw_dict = coorbital_to_inertial(hsur_raw_dict)
         
     # when nr calibration is applied
     if calibrated==True:
