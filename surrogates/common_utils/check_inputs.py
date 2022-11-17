@@ -41,7 +41,7 @@ def check_domain_of_validity(X_in, X_bounds):
 #---------------------------------------------------------------------------------------------------- 
 def check_extrinsic_params(M_tot, dist_mpc, orb_phase, inclination, mode_sum):
     """ 
-        Checks whether the user inputs are valid    
+        Checks whether the user inputs realted to extrinsic params are valid  
     """
         
     # geometric or SI units
@@ -62,7 +62,20 @@ def check_extrinsic_params(M_tot, dist_mpc, orb_phase, inclination, mode_sum):
 def check_user_inputs(X_in, X_bounds, modes_requested, modes_available, M_tot, dist_mpc, 
                       orb_phase, inclination, mode_sum):
     """ 
-        Checks whether the user inputs are valid    
+        Checks whether the user inputs are valid   
+        
+    Inputs
+    ======
+        X_in : array of surrogate parameterization e.g. [log(q), spin1, spin2]
+        X_bounds : bounds on all parameters - 2D array
+        modes_requested : list of modes to evaluate
+        modes_available : available mode in the surrogate
+        M_tot : total mass of the binary
+        dist_mpc : distance in mpc for the binary
+        orb_phase : orbital phase at the start of the waveform
+        inclination : inclination angle wrt the observer
+        mode_sum : indicate whether modes should be summed up
+    
     """
         
     # check extrinsic param inputs make sense
