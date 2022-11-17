@@ -109,8 +109,7 @@ def all_modes_surrogate(modes, X_input, fit_data_dict_1, fit_data_dict_2, \
     =======
     
         t_surrogate : time array
-        h_surrogate : dictiornary of modes if mode_sum not requested
-                      full waveform if mode_sum is requested    
+        h_surrogate : dictiornary of modes  
         
     """
     

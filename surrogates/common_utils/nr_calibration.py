@@ -65,6 +65,24 @@ def generate_calibrated_ppBHPT(X_input, raw_time, h_raw_dict, coefs_alpha, coefs
                                alpha_beta_functional_form):
     """
     rescales all raw ppBHPT waveform modes to match NR
+    
+    Inputs
+    ======
+        
+        X_input : array of nr calibration parameterization e.g. [1/q, spin]
+        time : array of uncalibrated time on which surrogate has been trained on 
+        h_raw_dict : dictiornary of uncalibrated modes
+        coeffs_alpha : dictionary of alpha values obtained from calibration mode-by-mode
+        coeffs_beta : beta value obtain from calibration - used in time rescaling
+        alpha_beta_functional_form : function to use for nr calibration - must come from 
+                                     common_utils.nr_calibration.py
+    
+    Outputs
+    =======
+    
+        t_calib : rescaled time array
+        hcal_dict : dictiornary of rescaled modes 
+        
     """
     
     hcal_dict = {}
