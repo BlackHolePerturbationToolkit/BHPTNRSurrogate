@@ -14,14 +14,38 @@ from common_utils import load_splines as load_spl
 from common_utils import load_GPRs
 from common_utils import filehash
 
+"""
+A collection of functions that loads the surrogate fit data from their respective h5 file
+that exists in BHPTNRSurrogate/data/ directory
+
+These functions should have the following I/O strcuture (irrespective of the whether the fits
+have been constrcuted using splines or GPR).
+
+    Inputs
+    ======
+        h5_data_dir : directory hosting h5 files
+
+    Outputs
+    =======
+        time : array of time on which surrogate has been trained on - read from h5 file
+        fit_data_dict_1, fit_data_dict_2 : dictionary of fit data obtained for two datapieces from 
+                                           the h5 file.
+                                           Keys are the modes.
+                                           Structure may depend on ether the data comes from spline 
+                                           fits or GPR fits. However, they should always be packed 
+                                           in fit_data_dict_1 and fit_data_dict_2. 
+                                           Make sure to modify your data loading script to achieve
+                                           this if necessary.
+        B_dict_1, B_dict_2 : dictionary of the basis matrices obtained from h5 file.
+                             Modes used as keys.
+        alpha_coeffs : dictionary of alpha values obtained from calibration mode-by-mode
+        beta_coeffs : beta value obtain from calibration - used in time rescaling
+"""
+
 #----------------------------------------------------------------------------------------------------
 def load_BHPTNRSur1dq1e4_surrogate(h5_data_dir):
     
     """ 
-    Loads all interpolation data for the following modes
-    modes=[(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),
-          (5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),
-          (8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
     Assumes the file BHPTNRSur1dq1e4.h5 is located in the h5_data_dir directory.
     """
     

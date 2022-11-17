@@ -16,7 +16,7 @@ def evaluate_surrogate(X_sur, X_calib, X_bounds, time, modes, modes_available, a
     """
     Inputs
     ======
-        X_sur  array of surrogate parameterization e.g. [log(q), spin1, spin2]
+        X_sur : array of surrogate parameterization e.g. [log(q), spin1, spin2]
         
         X_calib : array of nr calibration parameterization e.g. [1/q, spin]
 
