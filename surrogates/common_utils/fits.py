@@ -75,7 +75,44 @@ def all_modes_surrogate(modes, X_input, fit_data_dict_1, fit_data_dict_2, \
                         B_dict_1, B_dict_2, lmax, fit_func, decomposition_funcs, norm):
 
     """ Takes the fit data (either from splines or GPR), matrix B and computes the 
-        interpolated waveform for all modes """
+        interpolated waveform for all modes 
+        
+    Inputs
+    ======
+    
+        modes : list of modes to evaluate
+        
+        X_input :  array of surrogate parameterization e.g. [log(q), spin1, spin2]
+
+        fit_data_dict_1, fit_data_dict_2 : dictionary of fit data obtained for two datapieces from 
+                                           the h5 file.
+                                           Keys are the modes.
+                                           Structure may depend on ether the data comes from spline 
+                                           fits or GPR fits. However, they should always be packed 
+                                           in fit_data_dict_1 and fit_data_dict_2. 
+                                           Make sure to modify your data loading script to achieve
+                                           this if necessary.
+
+        B_dict_1, B_dict_2 : dictionary of the basis matrices obtained from h5 file.
+                             Modes used as keys.
+
+        fit_func : form of fitting function. options : 'spline_1d' or 'GPR_fits'
+
+        decomposition_funcs : form of data decomposition function to combine datapieces for 22 and
+                              higher modes respectively. e.g. Amp/Phase to full or real/imag to full
+                              etc. These functions are available at common_utils.utils.py
+
+        norm : overall normalization factor to be multiplied to final waveform. This depends on the 
+              way the surrogate have been constructed. Mostly norm=1/q or norm=1. 
+    
+    Outputs
+    =======
+    
+        t_surrogate : time array
+        h_surrogate : dictiornary of modes if mode_sum not requested
+                      full waveform if mode_sum is requested    
+        
+    """
     
     # dictionary to save waveform
     h_approx_dict={}

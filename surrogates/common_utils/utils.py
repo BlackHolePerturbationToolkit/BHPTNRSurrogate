@@ -145,6 +145,35 @@ def obtain_processed_output(X_calib, time, hsur_raw_dict, alpha_coeffs, beta_coe
     (i) NR calibration;
     (ii) Conversion to SI units from geometric units;
     (iii) mode summation;
+    
+    Inputs
+    ======
+        
+        X_calib :--: array of nr calibration parameterization e.g. [1/q, spin]
+        time :--: array of time on which surrogate has been trained on - read from h5 file
+        hsur_raw_dict :--: raw surrogate waveform dictionary
+        alpha_coeffs :--: dictionary of alpha values obtained from calibration mode-by-mode
+        beta_coeffs :--: beta value obtain from calibration - used in time rescaling
+        alpha_beta_functional_form :--: function to use for nr calibration - must come from 
+                                        common_utils.nr_calibration.py
+        calibrated :--: True/False - whether requested waveforms should be nr calibrated or not
+        M_tot :--: total mass of the binary
+        dist_mpc :--: distance in mpc for the binary
+        orb_phase :--: orbital phase at the start of the waveform
+        inclination :--: inclination angle wrt the observer
+        mode_sum :--: indicate whether modes should be summed up.
+        neg_modes :--: indicate whether negative modes should be retured using orbital plane symmetry.
+        lmax :--: maximum value of l upto which modes should be returned.
+        CoorbToInert :--: indicate whether higher modes have been modelled in coorbital frame. In that
+                          case, additional processing will be performed.
+    
+    Outputs
+    =======
+    
+        t_surrogate : time array 
+        h_surrogate : dictiornary of modes
+    
+     
     """
     
     # transform higher modes from coorbital to inertial frame if asked
