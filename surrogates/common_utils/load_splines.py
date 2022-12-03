@@ -106,6 +106,19 @@ def read_times(f, lmode, mmode):
     
     return time
 
+#----------------------------------------------------------------------------------------------------
+def read_nrcalib_info(f, nrcalib_modes):
+    """
+    Read alpha/beta nr calibration information
+    """
+    # read the coefficients for alpha
+    alpha_coeffs = {}
+    for mode in nrcalib_modes:
+        alpha_coeffs[mode] = f["nr_calib_params/(%d,%d)"%(mode[0],mode[1])]['alpha'][:]
+    # read the coefficients for beta
+    beta_coeffs = f["nr_calib_params/(2,2)"]['beta'][:]
+    
+    return alpha_coeffs, beta_coeffs
 
 #----------------------------------------------------------------------------------------------------
 def load_surrogate(h5_data_dir, h5File, wf_modes, nrcalib_modes):
@@ -156,12 +169,7 @@ def load_surrogate(h5_data_dir, h5File, wf_modes, nrcalib_modes):
             fit_data_dict_2[mode] = [h_eim_spline_2, eim_indicies_2]
                 
         # nr calibration info
-        # read the coefficients for alpha
-        alpha_coeffs = {}
-        for mode in nrcalib_modes:
-            alpha_coeffs[mode] = f["nr_calib_params/(%d,%d)"%(mode[0],mode[1])]['alpha'][:]
-        # read the coefficients for beta
-        beta_coeffs = f["nr_calib_params/(2,2)"]['beta'][:]
+        alpha_coeffs, beta_coeffs = read_nrcalib_info(f, nrcalib_modes)
 
     return time, fit_data_dict_1, fit_data_dict_2, B_dict_1, B_dict_2, alpha_coeffs, beta_coeffs
 
