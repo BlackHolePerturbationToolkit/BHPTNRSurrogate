@@ -27,13 +27,15 @@ def generic_doc_for_models() -> None:
     
     Input
     =====
-    q:      mass ratio
+    q:     mass ratio (with q >=1)
     
-    spin1: spin of the primary black hole / Default: None
-           Not Implemented in most models
+    chi1: dimensionless spin of the primary black hole where -1 <= chi1 <= 1
+          Default: None
+          Not Implemented in most models
     
-    spin2: spin of the secondary black hole / Default: None
-           Not Implemented in any model so far
+    chi2: dimensionless spin of the secondary black hole where -1 <= chi1 <= 1
+          Default: None
+          Not Implemented in any model so far
     
     ecc: eccentricity / Default: None
          Not Implemented in any model so far
@@ -55,14 +57,17 @@ def generic_doc_for_models() -> None:
     dist_mpc:  distance of the binary from the observer in Mpc
                Default: None (in which case geometric wf is returned)
                
-    orb_phase: orbital phase
+    orb_phase: orbital phase at the start of the waveform
     
     inclination: inclination angle
     
-    lmax:  5 (default)
-           Modes upto l=5 are NR calibrated. Modes l>6 are uncalibrated
-           Note: If one provides a list of modes, modes beyond lmax 
-                 will not be returned
+    lmax:  5 (default for BHPTNRSur1dq1e4)
+           modes are only calibrated to NR up to some maximum value of l. 
+           Please consult a specific model's documentation for information on how modes 
+           are calibrated to NR.
+           Default value changes depending on the model.
+           Note: If one provides a list of modes, modes beyond lmax will not be returned
+           Computes both positive and negative m modes upto lmax.
             
     mode_sum:  If true, all modes are summed. If false all modes are returned 
                in a dictionary. Default: false
@@ -72,10 +77,11 @@ def generic_doc_for_models() -> None:
                  When set to True, it applies a scaling to the uncalibrated
                  surrogate waveform. This scaling has been obtained by calibrating
                  the ppBHPT waveforms to NR in comparable mass ratio
-                 regime (3<=q<=9). If set to False, the raw (uncalibrated)
-                 ppBHPT waveforms are returned.
+                 regime. 
+                 Please consult a specific model's documentation for information on 
+                 how modes are calibrated to NR.
+                 If set to False, the raw (uncalibrated) ppBHPT waveforms are returned.
                  Default: True
-
                  
     Output
     ======

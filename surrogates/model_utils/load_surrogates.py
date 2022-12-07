@@ -31,7 +31,7 @@ have been constrcuted using splines or GPR).
         fit_data_dict_1, fit_data_dict_2 : dictionary of fit data obtained for two datapieces from 
                                            the h5 file.
                                            Keys are the modes.
-                                           Structure may depend on ether the data comes from spline 
+                                           Structure may depend on whether the data comes from spline 
                                            fits or GPR fits. However, they should always be packed 
                                            in fit_data_dict_1 and fit_data_dict_2. 
                                            Make sure to modify your data loading script to achieve
@@ -80,5 +80,6 @@ def load_BHPTNRSur1dq1e4_surrogate(h5_data_dir):
 
 #----------------------------------------------------------------------------------------------------
 def load_BHPTNRSur2dq1e3_surrogate(h5_data_dir):
-    NotImplemented
+    
+    raise NotImplementedError
     
