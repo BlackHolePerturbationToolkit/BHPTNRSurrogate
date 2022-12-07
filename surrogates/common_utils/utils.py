@@ -8,6 +8,7 @@ import numpy as np
 from gwtools import gwtools as _gwtools
 from gwtools.harmonics import sYlm as _sYlm
 from . import nr_calibration as nrcalib
+from gwtools.gwtools import geo_to_SI
 
 #----------------------------------------------------------------------------------------------------
 def amp_ph_to_comp(amp,phase):
@@ -42,31 +43,6 @@ def coorbital_to_inertial(h_coorb):
             h_inertial[mode] = h_coorb[mode]*np.exp(1j*m*np.array(orbital_phase))
             
     return h_inertial
-
-#---------------------------------------------------------------------------------------------------- 
-def geo_to_SI(t_geo, h_geo, M_tot, dist_mpc):
-    """
-    transforms the waveform from geomeric unit to physical unit
-    given geoemtric time, geometric waveform, total mass M, distance dL
-    """    
-    # set constants
-    G=_gwtools.G
-    MSUN_SI = _gwtools.MSUN_SI
-    PC_SI = _gwtools.PC_SI
-    C_SI = _gwtools.c
-    # Physical units
-    M = M_tot * MSUN_SI
-    dL = dist_mpc * PC_SI
-    
-    # scaling of time
-    t_SI = t_geo * (G*M/C_SI**3)
-    # scaling of strain for all modes
-    strain_geo_to_SI = (G*M/C_SI**3)/dL
-    h_SI={}
-    for mode in h_geo.keys():
-        h_SI[(mode)] = np.array(h_geo[mode])*strain_geo_to_SI
-    
-    return t_SI, h_SI
 
 #---------------------------------------------------------------------------------------------------- 
 def phase_rotation(h, delta_orb_phase):

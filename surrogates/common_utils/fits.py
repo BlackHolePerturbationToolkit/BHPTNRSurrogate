@@ -69,7 +69,7 @@ def _evaluate_surrogate_mode(X, fit_data_1, fit_data_2, B_datapiece_1, B_datapie
     h_approx_datapiece_2 = _evaluate_datapiece(X,  fit_data_2, B_datapiece_2, fit_func)
     
     # combine datapieces to obtain full wf either in the inertial frame or in the
-    # coorbital frame; at this stage, the waveforms are rertured in their respective
+    # coorbital frame; at this stage, the waveforms are returned in their respective
     # frames where models have been built e.g. inertial for 22 or coorbital for HMs
     # in case of BHPTNRSur1dq1e4
     h_approx =  decomposition_func(h_approx_datapiece_1, h_approx_datapiece_2)
@@ -91,8 +91,8 @@ def all_modes_surrogate(modes, X_input, fit_data_dict_1, fit_data_dict_2, \
         This routine computes uncalibrated waveforms in geometric units, and 
         is meant to be called from evaluate_surrogtes.evaluate_surrogate
         
-        It does not tranform the waveform to inertial frame at this stage if the modes
-        have been modelled in the coorbital frame
+        It does not transform the waveform to inertial frame at this stage if the modes
+        have been modeled in the coorbital frame
         
     Inputs
     ======
@@ -126,7 +126,7 @@ def all_modes_surrogate(modes, X_input, fit_data_dict_1, fit_data_dict_2, \
     =======
     
         t_surrogate : time array
-        h_surrogate : dictiornary of modes  
+        h_surrogate : dictionary of modes  
         
     """
     
@@ -141,7 +141,7 @@ def all_modes_surrogate(modes, X_input, fit_data_dict_1, fit_data_dict_2, \
             fit_data_1 = fit_data_dict_1[mode]
             fit_data_2 = fit_data_dict_2[mode]
             
-            # read the decompositon function for the modes; special treatment for the
+            # read the decomposition function for the modes; special treatment for the
             # 22 mode and higher order modes
             if mode==(2,2):
                 decomposition_func = decomposition_funcs[0]

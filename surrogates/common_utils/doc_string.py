@@ -23,7 +23,7 @@ def generic_doc_for_models() -> None:
     ## general overview
     ## -------------------------------------------------------------------------- ##
     
-    Description : warpper to generate BHPT surrogate waveforms
+    Description : wrapper to generate BHPT surrogate waveforms
     
     Input
     =====
@@ -33,7 +33,7 @@ def generic_doc_for_models() -> None:
           Default: None
           Not Implemented in most models
     
-    chi2: dimensionless spin of the secondary black hole where -1 <= chi1 <= 1
+    chi2: dimensionless spin of the secondary black hole where -1 <= chi2 <= 1
           Default: None
           Not Implemented in any model so far
     
