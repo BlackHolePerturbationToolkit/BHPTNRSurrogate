@@ -35,8 +35,6 @@ def check_domain_of_validity(X_in, X_bounds):
         if X_in[param_indx]<X_bounds[0][param_indx] or X_in[param_indx]>X_bounds[1][param_indx]:
             print("Warning :: input parameter is outside bounds for paramter value at index %d"
                   %param_indx)
-            print("Warning :: Bounds for this param is [%.1f,%.1f]:"
-                  %(X_bounds[0][param_indx],X_bounds[1][param_indx]))
         
 #---------------------------------------------------------------------------------------------------- 
 def check_extrinsic_params(M_tot, dist_mpc, orb_phase, inclination, mode_sum):
