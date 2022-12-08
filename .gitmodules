@@ -1,0 +1,3 @@
+[submodule "surrogates/common_utils/eval_pysur"]
+	path = surrogates/common_utils/eval_pysur
+	url = https://bitbucket.org/vijayvarma392/eval_pysur.git
