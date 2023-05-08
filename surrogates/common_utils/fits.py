@@ -2,6 +2,7 @@
 ## BHPTNRSurrogate module
 ## Description : evaluates the (spline or GPR) surrogate model
 ## Author : Tousif Islam, Nov 2022 [tislam@umassd.edu / tousifislam24@gmail.com]
+## Modified: Katie Rink, Mar 2023 [krink@utexas.edu]
 ##==============================================================================
 
 import numpy as np
@@ -12,11 +13,18 @@ from .eval_pysur import evaluate_fit as evaluate_GPR
 
 #----------------------------------------------------------------------------------------------------
 def _evaluate_GPR_at_EIM_nodes(X, fit_data):
-    """ Evaluate the spline at one EIM node 
+    """ Evaluate the GPR at one EIM node 
         For information on the inputs, please look at all_modes_surrogate()
     """
-    
-    raise NotImplementedError
+
+    [h_eim_gpr_mode, eim_indicies] = fit_data
+    [q_log10, chi] = X
+
+    # Evaluate GPR fit using pySurrogate at each node
+    fit = [evaluate_GPR.getFitEvaluator(dict(h_eim_gpr_mode['node%s'%i]))([chi, np.log(q_log10)]) for i in range(len(eim_indicies))]
+
+    # Return result for given (chi, log(q))
+    return np.array(fit)
 
 #----------------------------------------------------------------------------------------------------
 def _evaluate_splines_at_EIM_nodes(X, fit_data):

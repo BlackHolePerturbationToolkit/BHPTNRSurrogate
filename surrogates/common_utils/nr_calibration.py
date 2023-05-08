@@ -2,6 +2,7 @@
 ## BHPTNRSurrogate module
 ## Description : applies NR calibration to raw ppBHPT waveforms
 ## Author : Tousif Islam, Aug 2022 [tislam@umassd.edu / tousifislam24@gmail.com]
+## Modified: Katie Rink, Mar 2023 [krink@utexas.edu]
 ##==============================================================================
 
 import numpy as np
@@ -12,6 +13,14 @@ def alpha_beta_BHPTNRSur1dq1e4(x,a,b,c,d):
     functional form of alpha and beta scaling factors used in BHPTNRSur1dq1e4 model
     """
     
+    return 1 + a*x + b*x**2 + c*x**3 + d*x**4
+
+#----------------------------------------------------------------------------------------------------
+def alpha_beta_BHPTNRSur2dq1e3(x,a,b,c,d):
+    """
+    functional form of alpha and beta scaling factors used in BHPTNRSur2dq1e3 model
+    """
+
     return 1 + a*x + b*x**2 + c*x**3 + d*x**4
 
 #----------------------------------------------------------------------------------------------------
