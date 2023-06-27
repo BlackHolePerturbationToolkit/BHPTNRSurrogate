@@ -22,7 +22,8 @@ import common_utils.doc_string as docs
 h5_data_dir = os.path.dirname(os.path.abspath(__file__)) + '/../data'
 
 # load all fits data
-times, fit_data_dict_1, fit_data_dict_2, B_dict_1, B_dict_2, \
+# Here each of the data file are contains two separate spins
+times_sign, fit_data_dict_1_sign, fit_data_dict_2_sign, B_dict_1_sign, B_dict_2_sign, \
     alpha_coeffs, beta_coeffs = load.load_BHPTNRSur2dq1e3_surrogate(h5_data_dir)
 
 print("SURROGATE LOADED")
@@ -106,9 +107,17 @@ def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None,
         modes = modes_available
         
     if spin1 < 0.0:
-        time = times['negative_spin']
+        times = times_sign['negative_spin']
+        fit_data_dict_1 = fit_data_dict_1_sign['negative_spin']
+        fit_data_dict_2 = fit_data_dict_2_sign['negative_spin']
+        B_dict_1 = B_dict_1_sign['negative_spin']
+        B_dict_2 = B_dict_2_sign['negative_spin']
     else:
-        time = times['positive_spin']
+        times = times_sign['positive_spin']
+        fit_data_dict_1 = fit_data_dict_1_sign['positive_spin']
+        fit_data_dict_2 = fit_data_dict_2_sign['positive_spin']
+        B_dict_1 = B_dict_1_sign['positive_spin']
+        B_dict_2 = B_dict_2_sign['positive_spin']
         
     # define the parameterization for surrogate
     X_sur = [np.log10(q), spin1]
@@ -122,8 +131,8 @@ def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None,
     # domain of validity
     X_min_q = np.log10(3)
     X_max_q = np.log10(1000)
-    X_min_chi = -0.6
-    X_max_chi = 0.6
+    X_min_chi = -0.8
+    X_max_chi = 0.8
     X_bounds = [[X_min_q, X_min_chi],[X_max_q, X_max_chi]]
     
     # fit type
@@ -140,7 +149,7 @@ def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None,
     CoorbToInert = False
     
     # generate surrogate waveform
-    t_surrogate, h_surrogate = eval_sur.evaluate_surrogate(X_sur, X_calib, X_bounds, time, modes,\
+    t_surrogate, h_surrogate = eval_sur.evaluate_surrogate(X_sur, X_calib, X_bounds, times, modes,\
             modes_available, alpha_coeffs,  beta_coeffs, alpha_beta_functional_form,\
             calibrated, M_tot, dist_mpc, orb_phase, inclination, fit_data_dict_1,\
             fit_data_dict_2, B_dict_1, B_dict_2, fit_func, decomposition_funcs,\

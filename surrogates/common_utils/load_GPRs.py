@@ -45,25 +45,28 @@ def load_surrogate(h5_data_dir, fname, wf_modes, nrcalib_modes):
     with h5py.File('%s/%s'%(h5_data_dir,fname), 'r') as file:
 
         # dicts to copy .h5 file data into (needed for surrogate generation)
+        # Now for 2d surrogae each of dictionary will contain data for positive and negative spins 
         b_dict_amp, b_dict_ph = {}, {}
         fit_data_dict_amp, fit_data_dict_ph = {}, {}
         times = {}
 
         for spin_sign in ['negative_spin', 'positive_spin']:
             times[spin_sign] = copy.deepcopy(file[spin_sign]["l2_m2"]["times"][()]) # same times for all modes
+            b_dict_amp[spin_sign] = {}
+            b_dict_ph[spin_sign] = {}
+            fit_data_dict_amp[spin_sign] = {}
+            fit_data_dict_ph[spin_sign] = {}
 
-            for mode in modes:
-
+            for mode in wf_modes:
                 # Copy data groups we need to access from hdf5 file into output dicts.
-
                 f_mode = file[spin_sign]['l%s_m%s'%(mode[0], mode[1])]
                 h_amp_file, h_ph_file = dict(f_mode['gpr_amp']), dict(f_mode['gpr_phase'])
 
                 h_eim_gpr_amp, h_eim_gpr_ph = {}, {}
                 eim_indicies_amp, eim_indicies_ph = {}, {}
 
-                b_dict_amp[mode] = copy.deepcopy(f_mode["B_amp"][()])
-                b_dict_ph[mode] = copy.deepcopy(f_mode["B_phase"][()])
+                b_dict_amp[spin_sign][mode] = copy.deepcopy(f_mode["B_amp"][()])
+                b_dict_ph[spin_sign][mode] = copy.deepcopy(f_mode["B_phase"][()])
                 eim_indicies_amp = copy.deepcopy(f_mode["eim_indicies_amp"][()])
                 eim_indicies_ph = copy.deepcopy(f_mode["eim_indicies_phase"][()])
 
@@ -143,10 +146,10 @@ def load_surrogate(h5_data_dir, fname, wf_modes, nrcalib_modes):
                         h_gpr_node_params['kernel_']['k2']['noise_level'] = copy.deepcopy(h_file_node_params['kernel_']['k2']['noise_level'][()])
                         h_gpr_node_params['kernel_']['k2']['noise_level_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k2']['noise_level_bounds'][()])
 
-                fit_data_dict_amp[mode] = [h_eim_gpr_amp, eim_indicies_amp]
-                fit_data_dict_ph[mode] = [h_eim_gpr_ph, eim_indicies_ph]
+                fit_data_dict_amp[spin_sign][mode] = [h_eim_gpr_amp, eim_indicies_amp]
+                fit_data_dict_ph[spin_sign][mode] = [h_eim_gpr_ph, eim_indicies_ph]
 
-            # nr calibration info
-            alpha_coeffs, beta_coeffs = read_nrcalib_info(file, nrcalib_modes)
+    # nr calibration info
+    alpha_coeffs, beta_coeffs = read_nrcalib_info(file, nrcalib_modes)
 
     return times, fit_data_dict_amp, fit_data_dict_ph, b_dict_amp, b_dict_ph, alpha_coeffs, beta_coeffs

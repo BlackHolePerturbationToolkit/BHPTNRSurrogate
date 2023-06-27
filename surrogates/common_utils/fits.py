@@ -21,7 +21,8 @@ def _evaluate_GPR_at_EIM_nodes(X, fit_data):
     [q_log10, chi] = X
 
     # Evaluate GPR fit using pySurrogate at each node
-    fit = [evaluate_GPR.getFitEvaluator(dict(h_eim_gpr_mode['node%s'%i]))([chi, np.log(q_log10)]) for i in range(len(eim_indicies))]
+    # fit = [evaluate_GPR.getFitEvaluator(dict(h_eim_gpr_mode['node%s'%i]))([chi, np.log(q_log10)]) for i in range(len(eim_indicies))]
+    fit = [evaluate_GPR.getFitEvaluator(dict(h_eim_gpr_mode['node%s'%i]))([q_log10, chi]) for i in range(len(eim_indicies))]
 
     # Return result for given (chi, log(q))
     return np.array(fit)

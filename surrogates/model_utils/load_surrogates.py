@@ -90,7 +90,7 @@ def load_BHPTNRSur2dq1e3_surrogate(h5_data_dir):
     #raise NotImplementedError
     
     # h5 file name
-    fname = 'BHPTNRSur2dq1e3_TEST_02-08-22.h5'
+    fname = 'BHPTSpin_Jun27.h5'
     # provide current zenodo hash
     #zenodo_current_hash = "58a3a75e8fd18786ecc88cf98f694d4a"
     # zenodo url
