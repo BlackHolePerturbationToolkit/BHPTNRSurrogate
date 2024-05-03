@@ -28,9 +28,9 @@ def read_nrcalib_info(f, nrcalib_modes):
     # read the coefficients for alpha
     alpha_coeffs = {}
     for mode in nrcalib_modes:
-        alpha_coeffs[mode] = 1 #KR - final: f["nr_calib_params/(%d,%d)"%(mode[0],mode[1])]['alpha'][:]
+        alpha_coeffs[mode] = f["nr_calib_params/(%d,%d)"%(mode[0],mode[1])]['alpha'][:]
     # read the coefficients for beta
-    beta_coeffs = 1 #KR - final: f["nr_calib_params/(2,2)"]['beta'][:]
+    beta_coeffs = f["nr_calib_params/(2,2)"]['beta'][:]
 
     return alpha_coeffs, beta_coeffs
 
@@ -43,7 +43,7 @@ def load_surrogate(h5_data_dir, fname, wf_modes, nrcalib_modes):
                 - NOTE: times is dictionary with times.keys() = ['negative_spin', 'positive_spin']
     """
     with h5py.File('%s/%s'%(h5_data_dir,fname), 'r') as file:
-
+        
         # dicts to copy .h5 file data into (needed for surrogate generation)
         # Now for 2d surrogae each of dictionary will contain data for positive and negative spins 
         b_dict_amp, b_dict_ph = {}, {}
@@ -149,7 +149,7 @@ def load_surrogate(h5_data_dir, fname, wf_modes, nrcalib_modes):
                 fit_data_dict_amp[spin_sign][mode] = [h_eim_gpr_amp, eim_indicies_amp]
                 fit_data_dict_ph[spin_sign][mode] = [h_eim_gpr_ph, eim_indicies_ph]
 
-    # nr calibration info
-    alpha_coeffs, beta_coeffs = read_nrcalib_info(file, nrcalib_modes)
+        # nr calibration info
+        alpha_coeffs, beta_coeffs = read_nrcalib_info(file, nrcalib_modes)
 
     return times, fit_data_dict_amp, fit_data_dict_ph, b_dict_amp, b_dict_ph, alpha_coeffs, beta_coeffs

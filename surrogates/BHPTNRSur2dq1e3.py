@@ -24,38 +24,38 @@ h5_data_dir = os.path.dirname(os.path.abspath(__file__)) + '/../data'
 
 # load all fits data
 # Here each of the data file are contains two separate spins
-times_sign, fit_data_dict_1_sign, fit_data_dict_2_sign, B_dict_1_sign, B_dict_2_sign, \
+times_dict, fit_data_dict_1_sign, fit_data_dict_2_sign, B_dict_1_sign, B_dict_2_sign, \
     alpha_coeffs, beta_coeffs = load.load_BHPTNRSur2dq1e3_surrogate(h5_data_dir)
 
 print("SURROGATE LOADED")
 #---------------------------------------------------------------------------------------------------- 
 # add docstring from utility
 @docs.copy_doc(docs.generic_doc_for_models,docs.BHPTNRSur2dq1e3_doc)
-def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None, M_tot=None, dist_mpc=None, orb_phase=None, inclination=None, neg_modes=False, mode_sum=False, lmax=4, calibrated=False):
+def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None, M_tot=None, dist_mpc=None, orb_phase=None, inclination=None, neg_modes=False, mode_sum=False, lmax=4, calibrated=True):
 
     modes_available = [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4)]
 
     if modes==None:
         modes = modes_available
-        
+
     if spin1 < 0.0:
-        times = times_sign['negative_spin']
+        times = times_dict['negative_spin']
         fit_data_dict_1 = fit_data_dict_1_sign['negative_spin']
         fit_data_dict_2 = fit_data_dict_2_sign['negative_spin']
         B_dict_1 = B_dict_1_sign['negative_spin']
         B_dict_2 = B_dict_2_sign['negative_spin']
     else:
-        times = times_sign['positive_spin']
+        times = times_dict['positive_spin']
         fit_data_dict_1 = fit_data_dict_1_sign['positive_spin']
         fit_data_dict_2 = fit_data_dict_2_sign['positive_spin']
         B_dict_1 = B_dict_1_sign['positive_spin']
         B_dict_2 = B_dict_2_sign['positive_spin']
-        
+
     # define the parameterization for surrogate
     X_sur = [np.log10(q), spin1]
     
     # define parameterization for nr calibration
-    X_calib = 1/q
+    X_calib = [q, spin1]
     
     # normalization parameter to be multiplied with the surrogate waveform
     norm = 1/q
