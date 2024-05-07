@@ -27,7 +27,7 @@ def generic_doc_for_models() -> None:
     
     Input
     =====
-    q:     mass ratio (with q >=1)
+    q: mass ratio (with q >=1)
     
     chi1: dimensionless spin of the primary black hole where -1 <= chi1 <= 1
           Default: None
@@ -49,10 +49,10 @@ def generic_doc_for_models() -> None:
             e.g. [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),
                   (5,3),(5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),
                   (7,7),(8,6),(8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
-             for BHPTNRSur1dq1e4
+            for BHPTNRSur1dq1e4
             
-    M_tot:     total mass of the binary in solar masses
-               Default: None (in which case a geometric waveform is returned)
+    M_tot: total mass of the binary in solar masses
+           Default: None (in which case a geometric waveform is returned)
     
     dist_mpc:  distance of the binary from the observer in Mpc
                Default: None (in which case geometric wf is returned)
@@ -95,14 +95,14 @@ def generic_doc_for_models() -> None:
             t, h = generate_surrogate(q=8, modes=[(2,1),(2,2),(3,1),(3,2),(3,3),
                         (4,2),(4,3),(4,4),(5,3),(5,4),(5,5)], calibrated=False)
     2. to obtain NR Calibrated geometric waveform
-            t, h = generate_surrogate(q=8, modes=mode_list)       
+            t, h = generate_surrogate(q=8, modes=[(2,1),(2,2)])       
     3. to obtain NR calibrated physical waveform
-            t, h = generate_surrogate(q=q, modes=mode_list, M_tot=50, dist_mpc=100)
+            t, h = generate_surrogate(q=8, modes=[(2,1),(2,2)], M_tot=50, dist_mpc=100)
     4. to obtain NR calibrated physical waveform on a sphere
-            t, h = generate_surrogate(q=q, modes=mode_list, M_tot=50, dist_mpc=100, 
+            t, h = generate_surrogate(q=8, modes=[(2,1),(2,2)], M_tot=50, dist_mpc=100, 
                                      orb_phase=np.pi/3,inclination=np.pi/4)
     5. to obtain NR calibrated physic al waveform on a sphere for modes up to l=5
-            t, h = generate_surrogate(q=q, modes=mode_list, M_tot=50, dist_mpc=100, 
+            t, h = generate_surrogate(q=8, modes=[(2,1),(2,2)], M_tot=50, dist_mpc=100, 
                                       orb_phase=np.pi/3, inclination=np.pi/4, lmax=5)
     6. to obtain mode-summed NR calibrated physical waveform on a sphere
             t, h = generate_surrogate(q=8, M_tot=60, dist_mpc=100, orb_phase=np.pi/3, 
