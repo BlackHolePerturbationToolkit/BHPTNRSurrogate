@@ -90,7 +90,7 @@ def load_BHPTNRSur2dq1e3_surrogate(h5_data_dir):
     #raise NotImplementedError
 
     # h5 file name
-    fname = 'BHPTSpin_notebook_Apr26_24.h5'
+    fname = 'BHPTNRSur_Spin.h5'
     # provide current zenodo hash
     #zenodo_current_hash = "58a3a75e8fd18786ecc88cf98f694d4a"
     # zenodo url
@@ -102,6 +102,7 @@ def load_BHPTNRSur2dq1e3_surrogate(h5_data_dir):
     #file_hash = filehash.md5(fname, h5_data_dir, zenodo_ID)
     # check hash is the most recent
     #filehash.check_current_hash(file_hash, zenodo_current_hash, url, fname)
+    
 
     # modes to read fit data for
     wf_modes = [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4)]
