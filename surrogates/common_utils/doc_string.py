@@ -31,7 +31,6 @@ def generic_doc_for_models() -> None:
     
     chi1: dimensionless spin of the primary black hole where -1 <= chi1 <= 1
           Default: None
-          Not Implemented in most models
     
     chi2: dimensionless spin of the secondary black hole where -1 <= chi2 <= 1
           Default: None
