@@ -8,7 +8,7 @@
 import numpy as np
 
 #----------------------------------------------------------------------------------------------------
-def alpha_beta_BHPTNRSur1dq1e4(x,a,b,c,d):
+def alpha_beta_BHPTNRSur1dq1e4(x, a, b, c, d):
     """
     functional form of alpha and beta scaling factors used in BHPTNRSur1dq1e4 model
     """
@@ -16,7 +16,7 @@ def alpha_beta_BHPTNRSur1dq1e4(x,a,b,c,d):
     return 1 + a*x + b*x**2 + c*x**3 + d*x**4
 
 #----------------------------------------------------------------------------------------------------
-def alpha_beta_BHPTNRSur2dq1e3(X,A1,A2,A3,A4,B1,B2):
+def alpha_beta_BHPTNRSur2dq1e3(X, A1, A2, A3, A4, B1, B2):
     """
     functional form of alpha and beta scaling factors used in BHPTNRSur2dq1e3 model
     """

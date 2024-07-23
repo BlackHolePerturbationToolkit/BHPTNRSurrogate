@@ -106,8 +106,6 @@ def load_BHPTNRSur2dq1e3_surrogate(h5_data_dir):
 
     # modes to read fit data for
     wf_modes = [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4)]
-             #(5,3),(5,4),(5,5),(6,4),(6,5),(6,6),(7,5),(7,6),(7,7),
-             #(8,6),(8,7),(8,8),(9,7),(9,8),(9,9),(10,8),(10,9)]
 
     # modes used in nr calibration
     nrcalib_modes = [(2,2),(3,3),(4,4)]
