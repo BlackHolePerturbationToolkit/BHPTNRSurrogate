@@ -11,6 +11,14 @@ from . import nr_calibration as nrcalib
 from gwtools.gwtools import geo_to_SI
 
 #----------------------------------------------------------------------------------------------------
+def chars_to_string(chars):
+    """ Function converts array of  unicode characters to string.
+            - Copied from gwsurrogate: surrogatIO.py
+            - Needed for reading in hdf5 file data.
+    """
+    return "".join(chr(cc) for cc in chars)
+
+#----------------------------------------------------------------------------------------------------
 def amp_ph_to_comp(amp,phase):
     """ Takes the amplitude and phase of the waveform and
     computes the compose them together"""

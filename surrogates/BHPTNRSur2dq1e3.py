@@ -1,5 +1,5 @@
 ##==============================================================================
-## BHPTNRSur2dq1e3 : arXiv:XXXX.YYYYY
+## BHPTNRSur2dq1e3 : arXiv:2407.18319
 ## Description : generates calibrated ppBHPT surrogate model BHPTNRSur2dq1e3
 ## Author : Katie Rink, Dec 2022 [krink@utexas.edu]
 ## Modified : Tousif Islam, Jul 2023
@@ -34,11 +34,14 @@ print("**** Surrogate loaded ****")
 @docs.copy_doc(docs.generic_doc_for_models,docs.BHPTNRSur2dq1e3_doc)
 def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None, M_tot=None, dist_mpc=None, orb_phase=None, inclination=None, neg_modes=False, mode_sum=False, lmax=4, calibrated=True):
 
+    # list the modes modelled in BHPTNRSur2dq1e3
     modes_available = [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4)]
 
     if modes==None:
         modes = modes_available
 
+    # this model provide fits for the positive spin and negative spin cases differently
+    # choose appropriate fit params here depending on the input spin value
     if spin1 < 0.0:
         times = times_dict['negative_spin']
         fit_data_dict_1 = fit_data_dict_1_sign['negative_spin']

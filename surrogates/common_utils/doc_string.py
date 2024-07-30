@@ -152,7 +152,7 @@ def BHPTNRSur2dq1e3_doc() -> None:
     Available modes are: (2,1),(2,2),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4)].                     
     The m<0 modes are deduced from the m>0 modes. 
     
-    Model details can be found in arXiv:XXXX.XXXXX. 
+    Model details can be found in arXiv:2407.18319. 
     """
     return
 

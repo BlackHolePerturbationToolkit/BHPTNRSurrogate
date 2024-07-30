@@ -9,30 +9,9 @@ import h5py
 import matplotlib.pyplot as plt
 import os
 import copy
-from itertools import repeat
+from . import load_splines
+from . import utils
 
-#----------------------------------------------------------------------------------------------------
-modes = [(2,1),(3,1),(2,2),(3,2),(4,2),(3,3),(4,3),(4,4)]
-
-def chars_to_string(chars):
-    """ Function converts array of  unicode characters to string.
-            - Copied from gwsurrogate: surrogatIO.py
-            - Needed for reading in hdf5 file data.
-    """
-    return "".join(chr(cc) for cc in chars)
-
-def read_nrcalib_info(f, nrcalib_modes):
-    """
-    Read alpha/beta nr calibration information
-    """
-    # read the coefficients for alpha
-    alpha_coeffs = {}
-    for mode in nrcalib_modes:
-        alpha_coeffs[mode] = f["nr_calib_params/(%d,%d)"%(mode[0],mode[1])]['alpha'][:]
-    # read the coefficients for beta
-    beta_coeffs = f["nr_calib_params/(2,2)"]['beta'][:]
-
-    return alpha_coeffs, beta_coeffs
 
 def load_surrogate(h5_data_dir, fname, wf_modes, nrcalib_modes):
     """ Loads all interpolation data.
@@ -101,7 +80,7 @@ def load_surrogate(h5_data_dir, fname, wf_modes, nrcalib_modes):
                         h_gpr_node_params['kernel_']['k1']['k1'] = {}
                         h_gpr_node_params['kernel_']['k1']['k2'] = {}
 
-                        h_gpr_node['fitType'] = chars_to_string(h_file['fitType'][()])
+                        h_gpr_node['fitType'] = utils.chars_to_string(h_file['fitType'][()])
                         h_gpr_node['data_mean'] = copy.deepcopy(h_file_node['data_mean'][()])
                         h_gpr_node['data_std'] = copy.deepcopy(h_file_node['data_std'][()])
 
@@ -113,7 +92,7 @@ def load_surrogate(h5_data_dir, fname, wf_modes, nrcalib_modes):
                         h_gpr_node_params['_y_train_mean'] = copy.deepcopy(h_file_node_params['_y_train_mean'][()])
                         h_gpr_node_params['L_'] = copy.deepcopy(h_file_node_params['L_'][()])
 
-                        h_gpr_node_params['kernel_']['name'] = chars_to_string(h_file_node_params['kernel_']['name'])
+                        h_gpr_node_params['kernel_']['name'] = utils.chars_to_string(h_file_node_params['kernel_']['name'])
                         h_gpr_node_params['kernel_']['k2__noise_level'] = copy.deepcopy(h_file_node_params['kernel_']['k2__noise_level'][()])
                         h_gpr_node_params['kernel_']['k2__noise_level_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k2__noise_level_bounds'][()])
                         h_gpr_node_params['kernel_']['k1__k2__length_scale'] = copy.deepcopy(h_file_node_params['kernel_']['k1__k2__length_scale'][()])
@@ -121,28 +100,28 @@ def load_surrogate(h5_data_dir, fname, wf_modes, nrcalib_modes):
                         h_gpr_node_params['kernel_']['k1__k1__constant_value'] = copy.deepcopy(h_file_node_params['kernel_']['k1__k1__constant_value'][()])
                         h_gpr_node_params['kernel_']['k1__k1__constant_value_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k1__k1__constant_value_bounds'][()])
 
-                        h_gpr_node_params['kernel_']['k1']['name'] = chars_to_string(h_file_node_params['kernel_']['k1']['name'])
+                        h_gpr_node_params['kernel_']['k1']['name'] = utils.chars_to_string(h_file_node_params['kernel_']['k1']['name'])
                         h_gpr_node_params['kernel_']['k1']['k1__constant_value'] = copy.deepcopy(h_file_node_params['kernel_']['k1']['k1__constant_value'][()])
                         h_gpr_node_params['kernel_']['k1']['k1__constant_value_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k1']['k1__constant_value_bounds'][()])
                         h_gpr_node_params['kernel_']['k1']['k2__length_scale'] = copy.deepcopy(h_file_node_params['kernel_']['k1']['k2__length_scale'][()])
                         h_gpr_node_params['kernel_']['k1']['k2__length_scale_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k1']['k2__length_scale_bounds'][()])
 
-                        h_gpr_node_params['kernel_']['k1']['k1']['name'] = chars_to_string(h_file_node_params['kernel_']['k1']['k1']['name'])
+                        h_gpr_node_params['kernel_']['k1']['k1']['name'] = utils.chars_to_string(h_file_node_params['kernel_']['k1']['k1']['name'])
                         h_gpr_node_params['kernel_']['k1']['k1']['constant_value'] = copy.deepcopy(h_file_node_params['kernel_']['k1']['k1']['constant_value'][()])
                         h_gpr_node_params['kernel_']['k1']['k1']['constant_value_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k1']['k1']['constant_value_bounds'][()])
-                        h_gpr_node_params['kernel_']['k1']['k2']['name'] = chars_to_string(h_file_node_params['kernel_']['k1']['k2']['name'])
+                        h_gpr_node_params['kernel_']['k1']['k2']['name'] = utils.chars_to_string(h_file_node_params['kernel_']['k1']['k2']['name'])
                         h_gpr_node_params['kernel_']['k1']['k2']['length_scale'] = copy.deepcopy(h_file_node_params['kernel_']['k1']['k2']['length_scale'][()])
                         h_gpr_node_params['kernel_']['k1']['k2']['length_scale_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k1']['k2']['length_scale_bounds'][()])
 
-                        h_gpr_node_params['kernel_']['k1__k1']['name'] = chars_to_string(h_file_node_params['kernel_']['k1__k1']['name'])
+                        h_gpr_node_params['kernel_']['k1__k1']['name'] = utils.chars_to_string(h_file_node_params['kernel_']['k1__k1']['name'])
                         h_gpr_node_params['kernel_']['k1__k1']['constant_value'] = copy.deepcopy(h_file_node_params['kernel_']['k1__k1']['constant_value'][()])
                         h_gpr_node_params['kernel_']['k1__k1']['constant_value_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k1__k1']['constant_value_bounds'][()])
 
-                        h_gpr_node_params['kernel_']['k1__k2']['name'] = chars_to_string(h_file_node_params['kernel_']['k1__k2']['name'])
+                        h_gpr_node_params['kernel_']['k1__k2']['name'] = utils.chars_to_string(h_file_node_params['kernel_']['k1__k2']['name'])
                         h_gpr_node_params['kernel_']['k1__k2']['length_scale'] = copy.deepcopy(h_file_node_params['kernel_']['k1__k2']['length_scale'][()])
                         h_gpr_node_params['kernel_']['k1__k2']['length_scale_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k1__k2']['length_scale_bounds'][()])
 
-                        h_gpr_node_params['kernel_']['k2']['name'] = chars_to_string(h_file_node_params['kernel_']['k2']['name'])
+                        h_gpr_node_params['kernel_']['k2']['name'] = utils.chars_to_string(h_file_node_params['kernel_']['k2']['name'])
                         h_gpr_node_params['kernel_']['k2']['noise_level'] = copy.deepcopy(h_file_node_params['kernel_']['k2']['noise_level'][()])
                         h_gpr_node_params['kernel_']['k2']['noise_level_bounds'] = copy.deepcopy(h_file_node_params['kernel_']['k2']['noise_level_bounds'][()])
 
@@ -150,6 +129,6 @@ def load_surrogate(h5_data_dir, fname, wf_modes, nrcalib_modes):
                 fit_data_dict_ph[spin_sign][mode] = [h_eim_gpr_ph, eim_indicies_ph]
 
         # nr calibration info
-        alpha_coeffs, beta_coeffs = read_nrcalib_info(file, nrcalib_modes)
+        alpha_coeffs, beta_coeffs = load_splines.read_nrcalib_info(file, nrcalib_modes)
 
     return times, fit_data_dict_amp, fit_data_dict_ph, b_dict_amp, b_dict_ph, alpha_coeffs, beta_coeffs
