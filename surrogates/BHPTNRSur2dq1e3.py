@@ -32,7 +32,8 @@ print("**** Surrogate loaded ****")
 #---------------------------------------------------------------------------------------------------- 
 # add docstring from utility
 @docs.copy_doc(docs.generic_doc_for_models,docs.BHPTNRSur2dq1e3_doc)
-def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None, M_tot=None, dist_mpc=None, orb_phase=None, inclination=None, neg_modes=False, mode_sum=False, lmax=4, calibrated=True):
+def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None, M_tot=None, dist_mpc=None, 
+                       orb_phase=None, inclination=None, neg_modes=False, mode_sum=False, lmax=4, calibrated=True):
 
     # list the modes modelled in BHPTNRSur2dq1e3
     modes_available = [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4)]
