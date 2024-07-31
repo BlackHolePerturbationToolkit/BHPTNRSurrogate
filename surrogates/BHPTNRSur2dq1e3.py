@@ -37,10 +37,17 @@ def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None,
 
     # list the modes modelled in BHPTNRSur2dq1e3
     modes_available = [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4)]
-
     if modes==None:
         modes = modes_available
 
+    # Warning to user if inputs include secondary spin or eccentricity
+    if spin2 is not None:
+        print("**** warning **** : Model only takes [q,spin1] as input. Ignoring extra params.")
+    if ecc is not None:
+        print("**** warning **** : Model only takes [q,spin1] as input. Ignoring extra params.")
+    if ano is not None:
+        print("**** warning **** : Model only takes [q,spin1] as input. Ignoring extra params.")    
+    
     # this model provide fits for the positive spin and negative spin cases differently
     # choose appropriate fit params here depending on the input spin value
     if spin1 < 0.0:

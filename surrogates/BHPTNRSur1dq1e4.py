@@ -33,6 +33,16 @@ def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None
                (6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),(8,7),(8,8),(9,7),(9,8),
                (9,9),(10,8),(10,9)]
     
+    # Warning to user if inputs include spin or eccentricity
+    if spin1 is not None:
+        print("**** warning **** : Model only takes [q] as input. Ignoring extra params.")
+    if spin2 is not None:
+        print("**** warning **** : Model only takes [q] as input. Ignoring extra params.")
+    if ecc is not None:
+        print("**** warning **** : Model only takes [q] as input. Ignoring extra params.")
+    if ano is not None:
+        print("**** warning **** : Model only takes [q] as input. Ignoring extra params.")    
+    
     # modes requested
     if modes==None:
         modes = modes_available
