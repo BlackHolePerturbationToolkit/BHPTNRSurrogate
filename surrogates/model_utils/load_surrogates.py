@@ -92,11 +92,11 @@ def load_BHPTNRSur2dq1e3_surrogate(h5_data_dir):
     # h5 file name
     fname = 'BHPTNRSur2dq1e3.h5'
     # provide current zenodo hash
-    #zenodo_current_hash = "58a3a75e8fd18786ecc88cf98f694d4a"
+    zenodo_current_hash = "404db59dbfc49e88ebd7d5e258f25f3c"
     # zenodo url
-    #url = 'https://zenodo.org/record/7125742'
+    url = 'https://zenodo.org/record/7125742'
     # obtain zenodo ID
-    #zenodo_ID = url.rsplit("/")[-1]
+    zenodo_ID = url.rsplit("/")[-1]
     # obtain the hash for the current file; also downloads the file
     # if it doesn't exist in h5_data_dir
     #file_hash = filehash.md5(fname, h5_data_dir, zenodo_ID)
