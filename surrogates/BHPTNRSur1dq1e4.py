@@ -21,6 +21,8 @@ h5_data_dir = os.path.dirname(os.path.abspath(__file__)) + '/../data'
 time, fit_data_dict_1, fit_data_dict_2, B_dict_1, B_dict_2, \
                             alpha_coeffs, beta_coeffs = load.load_BHPTNRSur1dq1e4_surrogate(h5_data_dir)
 
+print("**** Surrogate loaded: BHPTNRSur1dq1e4 ****")
+
 #----------------------------------------------------------------------------------------------------
 # add docstring from utility
 @docs.copy_doc(docs.generic_doc_for_models,docs.BHPTNRSur1dq1e4_doc)

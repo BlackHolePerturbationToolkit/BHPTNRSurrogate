@@ -27,7 +27,7 @@ h5_data_dir = os.path.dirname(os.path.abspath(__file__)) + '/../data'
 times_dict, fit_data_dict_1_sign, fit_data_dict_2_sign, B_dict_1_sign, B_dict_2_sign, \
     alpha_coeffs, beta_coeffs = load.load_BHPTNRSur2dq1e3_surrogate(h5_data_dir)
 
-print("**** Surrogate loaded ****")
+print("**** Surrogate loaded: BHPTNRSur2dq1e3 ****")
 
 #---------------------------------------------------------------------------------------------------- 
 # add docstring from utility
