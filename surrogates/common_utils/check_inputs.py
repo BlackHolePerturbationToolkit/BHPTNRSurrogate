@@ -33,7 +33,7 @@ def check_domain_of_validity(X_in, X_bounds):
 
     for param_indx in range(len(X_in)):
         if X_in[param_indx]<X_bounds[0][param_indx] or X_in[param_indx]>X_bounds[1][param_indx]:
-            print("Warning :: input parameter is outside bounds for paramter value at index %d"
+            print("**** warning **** : input parameter is outside bounds for paramter value at index %d"
                   %param_indx)
         
 #---------------------------------------------------------------------------------------------------- 

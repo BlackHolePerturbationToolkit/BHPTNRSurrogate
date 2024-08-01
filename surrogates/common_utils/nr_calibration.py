@@ -16,13 +16,13 @@ def alpha_beta_BHPTNRSur1dq1e4(x, a, b, c, d):
     return 1 + a*x + b*x**2 + c*x**3 + d*x**4
 
 #----------------------------------------------------------------------------------------------------
-def alpha_beta_BHPTNRSur2dq1e3(X, A1, A2, A3, A4, B1, B2):
+def alpha_beta_BHPTNRSur2dq1e3(X, a1, a2, a3, a4, b1, b2):
     """
     functional form of alpha and beta scaling factors used in BHPTNRSur2dq1e3 model
     """
     [q, chi1] = X
-    term1    = A1/q + A2/q**2 + A3/q**3 + A4/q**4
-    term2 = 1.0 + B1*chi1 + B2*chi1**2
+    term1    = a1/q + a2/q**2 + a3/q**3 + a4/q**4
+    term2 = 1.0 + b1*chi1 + b2*chi1**2
     return 1.0 + term1*term2
 
 #----------------------------------------------------------------------------------------------------
@@ -36,7 +36,6 @@ def evaluate_alpha(X, l, coefs_alpha, alpha_beta_functional_form):
     
     if l<=lmax_nrcalib:
         # Auto unpackling of variables 
-        #alpha = alpha_beta_functional_form(X, coefs_alpha[(l,l)][0], coefs_alpha[(l,l)][1],coefs_alpha[(l,l)][2], coefs_alpha[(l,l)][3])
         alpha = alpha_beta_functional_form(X, *coefs_alpha[(l,l)])
     else:
         alpha = 1.0
@@ -50,7 +49,6 @@ def evaluate_beta(X, coefs_beta, alpha_beta_functional_form):
         Computes beta value at a given point in the paprameter space
     """
     # Auto unpackling of variables 
-    # beta = alpha_beta_functional_form(X, coefs_beta[0], coefs_beta[1], coefs_beta[2], coefs_beta[3])
     beta = alpha_beta_functional_form(X, *coefs_beta)
     return beta
 

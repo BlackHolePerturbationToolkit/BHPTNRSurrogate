@@ -169,12 +169,12 @@ def obtain_processed_output(X_calib, time, hsur_raw_dict, alpha_coeffs, beta_coe
         t_sur, hsur_dict = nrcalib.generate_calibrated_ppBHPT(X_calib, time, hsur_raw_dict, alpha_coeffs, 
                                                                   beta_coeffs, alpha_beta_functional_form)
         if lmax>5:
-            print('WARNING : only modes up to \ell=5 are NR calibrated')
+            print('**** warning **** : only modes up to \ell=5 are NR calibrated')
     # when no nr calibration is applied
     else:
         t_sur=np.array(time)
         hsur_dict = hsur_raw_dict
-        print('WARNING : modes are NOT NR calibrated - waveforms only have 0PA contribution')
+        print('**** warning **** : modes are NOT NR calibrated - waveforms only have 0PA contribution')
 
     # get all the negative m modes from postive m modes using symmetry
     if neg_modes:
