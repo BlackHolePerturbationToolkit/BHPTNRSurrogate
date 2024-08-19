@@ -30,7 +30,8 @@ where $^{-2}Y_{\ell m}$ are the spin$=-2$ weighted spherical harmonics,
 $q=m_1/m_2$ is the mass ratio, and $\chi_1$ is the dimensionless spin
 on the larger black hole. The surrogate model
 provides fast evaluations for the modes, $h_{\tt S}^{\ell,m}$.
-Over 50 available $m > 0$ modes are included, including up to $\ell=10$, 
+For some models, 
+over 50 available $m > 0$ modes are included, including up to $\ell=10$, 
 while the $m<0$ modes 
 $h^{\ell, -m} = (-1)^{\ell} h^{\ell,m}{}^*$ can be deduced from the $m>0$ modes.
 
