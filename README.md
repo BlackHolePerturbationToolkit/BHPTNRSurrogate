@@ -95,11 +95,12 @@ wget https://zenodo.org/records/13340319/BHPTNRSur2dq1e3.h5
 
 3. Simply move these files into the data directory `BHPTNRSurrogate/data/`.
 
-# Example Usage
+# Examples
+
+Example tutorial notebooks for the **BHPTNRSur1dq1e4** and **BHPTNRSur2dq1e3** models are available here `BHPTNRSurrogate/tutorials`.
 
 ### 1. BHPTNRSur1dq1e4
-Example tutorial notebooks for the **BHPTNRSur1dq1e4** 
-and **BHPTNRSur2dq1e3** models are available here `BHPTNRSurrogate/tutorials`.
+
 For example, 
 
 ```bash
