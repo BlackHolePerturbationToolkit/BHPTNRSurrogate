@@ -54,7 +54,7 @@ def load_BHPTNRSur1dq1e4_surrogate(h5_data_dir):
     # provide current zenodo hash
     zenodo_current_hash = "58a3a75e8fd18786ecc88cf98f694d4a"
     # zenodo url
-    url = 'https://zenodo.org/record/7125742'
+    url = 'https://zenodo.org/records/13340319'
     # obtain zenodo ID
     zenodo_ID = url.rsplit("/")[-1]
     # obtain the hash for the current file; also downloads the file
@@ -87,14 +87,12 @@ def load_BHPTNRSur2dq1e3_surrogate(h5_data_dir):
     NOTE: times is dictionary with times.keys() = ['negative_spin', 'positive_spin']
     """
 
-    #raise NotImplementedError
-
     # h5 file name
     fname = 'BHPTNRSur2dq1e3.h5'
     # provide current zenodo hash
     zenodo_current_hash = "404db59dbfc49e88ebd7d5e258f25f3c"
     # zenodo url
-    url = 'https://zenodo.org/record/7125742'
+    url = 'https://zenodo.org/records/13340319'
     # obtain zenodo ID
     zenodo_ID = url.rsplit("/")[-1]
     # obtain the hash for the current file; also downloads the file

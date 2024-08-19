@@ -35,7 +35,7 @@ def evaluate_alpha(X, l, coefs_alpha, alpha_beta_functional_form):
     lmax_nrcalib = max([x[0] for x in coefs_alpha.keys()])
     
     if l<=lmax_nrcalib:
-        # Auto unpackling of variables 
+        # Auto unpacking of variables 
         alpha = alpha_beta_functional_form(X, *coefs_alpha[(l,l)])
     else:
         alpha = 1.0

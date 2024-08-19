@@ -3,6 +3,11 @@
 ## Description : loads GPR surrogate fits data
 ## Author: Katie Rink, Mar 2023 [krink@utexas.edu]
 ## Modified: Tousif Islam, July 2024
+##
+##
+## NOTE: despite this file being in the common_utils directory, it is specific 
+## to the BHPTNRSur2dq1e3 model and its associated h5 data file.
+##
 ##==============================================================================
 
 import numpy as np
