@@ -2,17 +2,28 @@
 ## BHPTNRSurrogate module
 ## Description : applies NR calibration to raw ppBHPT waveforms
 ## Author : Tousif Islam, Aug 2022 [tislam@umassd.edu / tousifislam24@gmail.com]
+## Modified: Katie Rink, Mar 2023 [krink@utexas.edu]
 ##==============================================================================
 
 import numpy as np
 
 #----------------------------------------------------------------------------------------------------
-def alpha_beta_BHPTNRSur1dq1e4(x,a,b,c,d):
+def alpha_beta_BHPTNRSur1dq1e4(x, a, b, c, d):
     """
     functional form of alpha and beta scaling factors used in BHPTNRSur1dq1e4 model
     """
     
     return 1 + a*x + b*x**2 + c*x**3 + d*x**4
+
+#----------------------------------------------------------------------------------------------------
+def alpha_beta_BHPTNRSur2dq1e3(X, a1, a2, a3, a4, b1, b2):
+    """
+    functional form of alpha and beta scaling factors used in BHPTNRSur2dq1e3 model
+    """
+    [q, chi1] = X
+    term1    = a1/q + a2/q**2 + a3/q**3 + a4/q**4
+    term2 = 1.0 + b1*chi1 + b2*chi1**2
+    return 1.0 + term1*term2
 
 #----------------------------------------------------------------------------------------------------
 def evaluate_alpha(X, l, coefs_alpha, alpha_beta_functional_form):
@@ -24,8 +35,8 @@ def evaluate_alpha(X, l, coefs_alpha, alpha_beta_functional_form):
     lmax_nrcalib = max([x[0] for x in coefs_alpha.keys()])
     
     if l<=lmax_nrcalib:
-        alpha = alpha_beta_functional_form(X, coefs_alpha[(l,l)][0], coefs_alpha[(l,l)][1], 
-                                           coefs_alpha[(l,l)][2], coefs_alpha[(l,l)][3])
+        # Auto unpacking of variables 
+        alpha = alpha_beta_functional_form(X, *coefs_alpha[(l,l)])
     else:
         alpha = 1.0
 
@@ -37,9 +48,8 @@ def evaluate_beta(X, coefs_beta, alpha_beta_functional_form):
     """ Implements alpha-scaling to match NR 
         Computes beta value at a given point in the paprameter space
     """
-    
-    beta = alpha_beta_functional_form(X, coefs_beta[0], coefs_beta[1], coefs_beta[2], 
-                                      coefs_beta[3])
+    # Auto unpackling of variables 
+    beta = alpha_beta_functional_form(X, *coefs_beta)
     return beta
 
 #----------------------------------------------------------------------------------------------------
@@ -84,7 +94,6 @@ def generate_calibrated_ppBHPT(X_input, raw_time, h_raw_dict, coefs_alpha, coefs
         hcal_dict : dictiornary of rescaled modes 
         
     """
-    
     hcal_dict = {}
     # scale all modes
     for mode in h_raw_dict.keys():

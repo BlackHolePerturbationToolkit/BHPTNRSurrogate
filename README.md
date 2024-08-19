@@ -80,7 +80,7 @@ run most parts of the notebook.
 2. Download the datafile from Zenodo
 
 ```bash
-wget https://zenodo.org/record/7125742/BHPTNRSur1dq1e4.h5
+wget https://zenodo.org/records/13340319/BHPTNRSur1dq1e4.h5
 ```
 3. Simply move the BHPTNRSur1dq1e4.h5 file into the data directory `BHPTNRSurrogate/data/`.
 

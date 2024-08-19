@@ -21,6 +21,8 @@ h5_data_dir = os.path.dirname(os.path.abspath(__file__)) + '/../data'
 time, fit_data_dict_1, fit_data_dict_2, B_dict_1, B_dict_2, \
                             alpha_coeffs, beta_coeffs = load.load_BHPTNRSur1dq1e4_surrogate(h5_data_dir)
 
+print("**** Surrogate loaded: BHPTNRSur1dq1e4 ****")
+
 #----------------------------------------------------------------------------------------------------
 # add docstring from utility
 @docs.copy_doc(docs.generic_doc_for_models,docs.BHPTNRSur1dq1e4_doc)
@@ -32,6 +34,16 @@ def generate_surrogate(q, spin1=None, spin2=None, ecc=None, ano=None, modes=None
     modes_available = [(2,2),(2,1),(3,1),(3,2),(3,3),(4,2),(4,3),(4,4),(5,3),(5,4),(5,5),
                (6,4),(6,5),(6,6),(7,5),(7,6),(7,7),(8,6),(8,7),(8,8),(9,7),(9,8),
                (9,9),(10,8),(10,9)]
+    
+    # Warning to user if inputs include spin or eccentricity
+    if spin1 is not None:
+        print("**** warning **** : Model only takes [q] as input. Ignoring extra params.")
+    if spin2 is not None:
+        print("**** warning **** : Model only takes [q] as input. Ignoring extra params.")
+    if ecc is not None:
+        print("**** warning **** : Model only takes [q] as input. Ignoring extra params.")
+    if ano is not None:
+        print("**** warning **** : Model only takes [q] as input. Ignoring extra params.")    
     
     # modes requested
     if modes==None:
