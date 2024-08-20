@@ -97,9 +97,9 @@ def load_BHPTNRSur2dq1e3_surrogate(h5_data_dir):
     zenodo_ID = url.rsplit("/")[-1]
     # obtain the hash for the current file; also downloads the file
     # if it doesn't exist in h5_data_dir
-    #file_hash = filehash.md5(fname, h5_data_dir, zenodo_ID)
+    file_hash = filehash.md5(fname, h5_data_dir, zenodo_ID)
     # check hash is the most recent
-    #filehash.check_current_hash(file_hash, zenodo_current_hash, url, fname)
+    filehash.check_current_hash(file_hash, zenodo_current_hash, url, fname)
     
 
     # modes to read fit data for
