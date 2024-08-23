@@ -18,6 +18,7 @@ The latest development version will always be available from the project git
 repository:
 ```bash
 git clone https://github.com/BlackHolePerturbationToolkit/BHPTNRSurrogate.git
+cd BHPTNRSurrogate
 git submodule init
 git submodule update
 ```
