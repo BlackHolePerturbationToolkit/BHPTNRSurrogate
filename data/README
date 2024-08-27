@@ -2,7 +2,7 @@ This folder should contain the surrogate h5 file
 
 If not, one can download the relevant file using the following public link:
 
-https://zenodo.org/records/13340319/
+https://zenodo.org/records/13340319
 
 * For BHPTNRSur1dq1e3, we can also download the data from dropbox using:
 !wget -O ../../data/BHPTNRSur2dq1e3.h5 https://www.dropbox.com/scl/fo/hyli37hr8c8wn8iq3p85z/AExZRxZrY6HX5756IdAVeGU?rlkey=n06hodoapvlrx0b6lxfrfbst6
