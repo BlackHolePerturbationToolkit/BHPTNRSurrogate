@@ -16,8 +16,8 @@ from .common_utils import utils, fits
 from .common_utils import nr_calibration as nrcalib
 from .common_utils import doc_string as docs
 
-# h5 data directory
-h5_data_dir = os.path.dirname(os.path.abspath(__file__)) + '/../data'
+# h5 data directory at the repository root
+h5_data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'data'))
 
 # lazy-loaded surrogate data cache
 _surrogate_data = {}

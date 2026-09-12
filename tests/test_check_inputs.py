@@ -1,4 +1,4 @@
-"""Unit tests for surrogates/common_utils/check_inputs.py"""
+"""Unit tests for BHPTNRSurrogate/surrogates/common_utils/check_inputs.py."""
 
 import warnings
 

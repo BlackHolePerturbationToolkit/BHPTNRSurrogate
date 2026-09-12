@@ -19,7 +19,7 @@ gpr = ["scikit-learn"]
 test = ["pytest>=7.0"]
 
 [tool.setuptools.packages]
-find = {where = [".."], include = ["BHPTNRSurrogate*"]}
+find = {where = ["."], include = ["BHPTNRSurrogate*"]}
 
 [tool.setuptools.package-data]
 "*" = ["*.h5"]
