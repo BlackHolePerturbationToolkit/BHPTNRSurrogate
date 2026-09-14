@@ -18,6 +18,9 @@
 - Removed unused imports across modules.
 
 ### Changed
+- The default mass convention for uncalibrated waveforms changed from the
+  historical implicit primary-mass (`m1`) convention to total mass (`M`). Pass
+  `mass_scale='m1'` to reproduce the earlier behavior.
 - Surrogate data is now lazily loaded on first access instead of at import time.
 - Switched from `wget` to `urllib` for h5 file downloads.
 - Converted to proper Python package with `pyproject.toml` and relative imports.

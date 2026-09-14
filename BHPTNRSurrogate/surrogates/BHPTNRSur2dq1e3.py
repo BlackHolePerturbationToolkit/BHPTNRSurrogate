@@ -79,7 +79,8 @@ def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None,
             stacklevel=2,
         )
 
-    # compute mass_factor for uncalibrated waveforms
+    # Raw ppBHPT data use m1 units. Rescale the default uncalibrated output to total-mass units;
+    # mass_scale='m1' preserves the behavior from versions before 0.2.0.
     if not calibrated and mass_scale == 'M':
         mass_factor = 1.0 / (1.0 + 1.0/q)
     else:

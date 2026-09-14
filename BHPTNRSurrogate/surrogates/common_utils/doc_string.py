@@ -84,14 +84,15 @@ def generic_doc_for_models() -> None:
                  Default: True
 
     mass_scale:  Mass convention for the waveform output. Options: 'M' or 'm1'.
-                 Default: 'M'
+                 Default: 'M' (total mass).
                  When calibrated=True, this is ignored (NR calibration already uses
                  total mass M).
                  When calibrated=False and mass_scale='M', the raw ppBHPT waveform
                  (which uses m1 as the mass scale) is rescaled to total mass M by
                  applying a factor of q/(q+1) to both time and strain.
                  When calibrated=False and mass_scale='m1', the raw ppBHPT waveform
-                 is returned without any rescaling.
+                 is returned without any rescaling. This reproduces the default
+                 behavior from versions before 0.2.0.
 
     Output
     ======
@@ -165,4 +166,3 @@ def BHPTNRSur2dq1e3_doc() -> None:
     Model details can be found in arXiv:2407.18319. 
     """
     return
-

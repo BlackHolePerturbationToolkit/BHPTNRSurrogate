@@ -60,6 +60,17 @@ mode was calibrated to NR in the comparable mass ratios. The EMRISur1dq1e4 model
 this package but can be accessed from [EMRISurrogate](https://bhptoolkit.org/EMRISurrogate/).
 **CAUTION :** This model is outdated and we advise for using BHPTNRSurrogate(s).
 
+## Mass convention
+
+Both BHPTNRSur models use total mass by default (`mass_scale='M'`). For
+uncalibrated waveforms, the underlying ppBHPT data use the primary mass `m1`, so
+the package rescales both time and strain by `q/(q+1)` to return total-mass units.
+
+This changes the default for uncalibrated waveforms from the implicit `m1`
+convention used before version 0.2.0. To reproduce that earlier behavior, pass
+`mass_scale='m1'` explicitly. The option has no effect on calibrated waveforms,
+which already use total-mass units.
+
 # Requirements
 
 This package requires Python 3, sklearn, hashlib, and gwtools.
