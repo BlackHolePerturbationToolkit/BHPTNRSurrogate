@@ -93,6 +93,8 @@ def generic_doc_for_models() -> None:
                  When calibrated=False and mass_scale='m1', the raw ppBHPT waveform
                  is returned without any rescaling. This reproduces the default
                  behavior from versions before 0.2.0.
+                 Physical waveforms requested with M_tot and dist_mpc require
+                 mass_scale='M'.
 
     Output
     ======

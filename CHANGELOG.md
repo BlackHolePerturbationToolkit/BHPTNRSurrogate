@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.0] - 2026-02-26
+## [0.2.0] - 2026-09-14
 
 ### Added
 - `mass_scale` parameter to `BHPTNRSur1dq1e4` and `BHPTNRSur2dq1e3` surrogate models.

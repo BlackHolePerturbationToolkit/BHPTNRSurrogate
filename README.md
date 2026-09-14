@@ -68,8 +68,9 @@ the package rescales both time and strain by `q/(q+1)` to return total-mass unit
 
 This changes the default for uncalibrated waveforms from the implicit `m1`
 convention used before version 0.2.0. To reproduce that earlier behavior, pass
-`mass_scale='m1'` explicitly. The option has no effect on calibrated waveforms,
-which already use total-mass units.
+`mass_scale='m1'` explicitly. For geometric calibrated waveforms, the option has
+no effect because they already use total-mass units. Physical waveforms requested
+with `M_tot` and `dist_mpc` require `mass_scale='M'`.
 
 # Requirements
 

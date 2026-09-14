@@ -69,6 +69,11 @@ class TestMassScaleValidation:
         t, h = BHPTNRSur2dq1e3.generate_surrogate(q=10, calibrated=False, mass_scale='m1')
         assert isinstance(h, dict)
 
+    def test_physical_waveform_rejects_mass_scale_m1(self):
+        from BHPTNRSurrogate.surrogates import BHPTNRSur2dq1e3
+        with pytest.raises(ValueError, match="only valid for geometric waveforms"):
+            BHPTNRSur2dq1e3.generate_surrogate(q=10, M_tot=50, dist_mpc=100, calibrated=False, mass_scale='m1')
+
 
 class TestSpinBranching:
     def test_positive_spin(self):

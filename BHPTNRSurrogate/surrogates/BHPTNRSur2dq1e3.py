@@ -73,6 +73,9 @@ def generate_surrogate(q, spin1=0.0, spin2=None, ecc=None, ano=None, modes=None,
     if mass_scale not in ('M', 'm1'):
         raise ValueError("mass_scale must be 'M' or 'm1', got %r" % mass_scale)
 
+    if mass_scale == 'm1' and M_tot is not None and dist_mpc is not None:
+        raise ValueError("mass_scale='m1' is only valid for geometric waveforms; physical waveforms require mass_scale='M'")
+
     if calibrated and mass_scale != 'M':
         warnings.warn(
             "mass_scale is ignored when calibrated=True (NR calibration already uses total mass M)",
