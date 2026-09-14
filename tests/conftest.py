@@ -46,15 +46,9 @@ def model_1d():
 def model_2d():
     """Load the 2D surrogate model (triggers h5 download).
 
-    Skips if the eval_pysur submodule (needed for GPR fits) is not available.
+    Requires the eval_pysur submodule used for GPR fits.
     """
-    try:
-        from BHPTNRSurrogate.surrogates.common_utils.eval_pysur import evaluate_fit  # noqa: F401
-    except ImportError:
-        pytest.skip(
-            "eval_pysur submodule not available — run "
-            "'git submodule init && git submodule update'"
-        )
+    from BHPTNRSurrogate.surrogates.common_utils.eval_pysur import evaluate_fit  # noqa: F401
     from BHPTNRSurrogate.surrogates import BHPTNRSur2dq1e3
     BHPTNRSur2dq1e3._ensure_loaded()
     return BHPTNRSur2dq1e3
