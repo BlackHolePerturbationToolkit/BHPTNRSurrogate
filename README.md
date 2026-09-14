@@ -94,7 +94,7 @@ wget https://zenodo.org/records/13340319/BHPTNRSur1dq1e4.h5
 wget https://zenodo.org/records/13340319/BHPTNRSur2dq1e3.h5
 ```
 
-3. Simply move these files into the data directory `BHPTNRSurrogate/data/`.
+3. Create `BHPTNRSurrogate/data/` and move the files into it.
 
 4. Install the package locally:
 
@@ -102,7 +102,9 @@ wget https://zenodo.org/records/13340319/BHPTNRSur2dq1e3.h5
 pip install -e .
 ```
 
-Alternatively, if you skip steps 2-3, the h5 data files will be automatically downloaded from Zenodo the first time you call a model.
+Alternatively, if you skip steps 2-3, the h5 data files will be automatically downloaded into the package's `data/` directory the first time you call a model. This follows the package-local strategy used by `gwsurrogate`.
+
+Set `BHPTNR_SURROGATE_DATA_DIR` before importing the package to use a custom data directory.
 
 # Examples
 

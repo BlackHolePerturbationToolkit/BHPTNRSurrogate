@@ -12,6 +12,7 @@
 ### Fixed
 - H5 data download now prints progress messages to stdout. Previously used
   `logger.info()` with no handler configured, so downloads were silent.
+- H5 files are stored in the package's `data/` directory, following the package-local strategy used by `gwsurrogate`.
 - Replaced `print()` warnings with `warnings.warn()` throughout surrogate modules.
 - Fixed `SyntaxWarning` from invalid escape sequences.
 - Removed unused imports across modules.

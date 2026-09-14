@@ -21,7 +21,7 @@ test = ["pytest>=7.0"]
 [tool.setuptools.packages]
 find = {where = ["."], include = ["BHPTNRSurrogate*"]}
 
-[tool.setuptools.package-data]
+[tool.setuptools.exclude-package-data]
 "*" = ["*.h5"]
 
 [tool.pytest.ini_options]

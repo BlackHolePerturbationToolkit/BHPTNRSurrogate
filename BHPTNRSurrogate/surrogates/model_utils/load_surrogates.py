@@ -14,8 +14,7 @@ from ..common_utils import load_GPRs as load_gpr
 from ..common_utils import filehash
 
 """
-A collection of functions that loads the surrogate fit data from their respective h5 file
-that exists in BHPTNRSurrogate/data/ directory
+A collection of functions that loads the surrogate fit data from its configured data directory.
 
 These functions should have the following I/O strcuture (irrespective of the whether the fits
 have been constrcuted using splines or GPR).
@@ -58,7 +57,7 @@ def load_BHPTNRSur1dq1e4_surrogate(h5_data_dir):
     zenodo_ID = url.rsplit("/")[-1]
     # obtain the hash for the current file; also downloads the file
     # if it doesn't exist in h5_data_dir
-    file_hash = filehash.md5(fname, h5_data_dir, zenodo_ID)
+    file_hash = filehash.md5(fname, h5_data_dir, zenodo_ID, zenodo_current_hash)
     # check hash is the most recent
     filehash.check_current_hash(file_hash, zenodo_current_hash, url, fname)
 
@@ -96,7 +95,7 @@ def load_BHPTNRSur2dq1e3_surrogate(h5_data_dir):
     zenodo_ID = url.rsplit("/")[-1]
     # obtain the hash for the current file; also downloads the file
     # if it doesn't exist in h5_data_dir
-    file_hash = filehash.md5(fname, h5_data_dir, zenodo_ID)
+    file_hash = filehash.md5(fname, h5_data_dir, zenodo_ID, zenodo_current_hash)
     # check hash is the most recent
     filehash.check_current_hash(file_hash, zenodo_current_hash, url, fname)
     

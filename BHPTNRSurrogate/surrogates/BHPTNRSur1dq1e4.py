@@ -7,16 +7,16 @@
 import warnings
 
 import numpy as np
-import os
 
+from .._data import get_data_dir
 from .model_utils import load_surrogates as load
 from .model_utils import eval_surrogates as eval_sur
 from .common_utils import utils, fits
 from .common_utils import nr_calibration as nrcalib
 from .common_utils import doc_string as docs
 
-# h5 data directory at the repository root
-h5_data_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'data'))
+# h5 data directory
+h5_data_dir = get_data_dir()
 
 # lazy-loaded surrogate data cache
 _surrogate_data = {}

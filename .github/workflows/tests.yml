@@ -47,7 +47,7 @@ jobs:
       - name: Cache h5 data
         uses: actions/cache@v4
         with:
-          path: data
+          path: BHPTNRSurrogate/data
           key: surrogate-h5-data-v1
 
       - name: Install dependencies
@@ -77,7 +77,7 @@ jobs:
       - name: Cache h5 data
         uses: actions/cache@v4
         with:
-          path: data
+          path: BHPTNRSurrogate/data
           key: surrogate-h5-data-v1
 
       - name: Install dependencies
