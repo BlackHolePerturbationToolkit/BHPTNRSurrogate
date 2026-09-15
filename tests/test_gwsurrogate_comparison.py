@@ -40,7 +40,7 @@ def sur_bhpt():
 def reference_data():
     """Load stored reference waveforms."""
     if not os.path.exists(REFERENCE_FILE):
-        pytest.skip("Reference data file not found: %s" % REFERENCE_FILE)
+        pytest.fail("Required regression data file not found: %s" % REFERENCE_FILE)
     return dict(np.load(REFERENCE_FILE))
 
 

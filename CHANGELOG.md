@@ -18,6 +18,9 @@
 - Removed unused imports across modules.
 
 ### Changed
+- CI now tests Python 3.8, 3.10, 3.11, and 3.14.
+- scikit-learn is now a required dependency because it is needed by the two-dimensional surrogate model.
+- Passing `mass_scale='m1'` for a calibrated waveform now raises a `ValueError` instead of being ignored.
 - The default mass convention for uncalibrated waveforms changed from the
   historical implicit primary-mass (`m1`) convention to total mass (`M`). Pass
   `mass_scale='m1'` to reproduce the earlier behavior.

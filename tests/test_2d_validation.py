@@ -54,9 +54,9 @@ class TestMassScaleValidation:
         with pytest.raises(ValueError, match="mass_scale must be"):
             BHPTNRSur2dq1e3.generate_surrogate(q=10, mass_scale='bad')
 
-    def test_calibrated_with_m1_warns(self):
+    def test_calibrated_with_m1_raises(self):
         from BHPTNRSurrogate.surrogates import BHPTNRSur2dq1e3
-        with pytest.warns(UserWarning, match="mass_scale is ignored"):
+        with pytest.raises(ValueError, match="cannot be used when calibrated=True"):
             BHPTNRSur2dq1e3.generate_surrogate(q=10, calibrated=True, mass_scale='m1')
 
     def test_valid_mass_scale_M(self):

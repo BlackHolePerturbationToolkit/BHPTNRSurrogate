@@ -12,10 +12,10 @@ dependencies = [
     "scipy",
     "h5py",
     "gwtools",
+    "scikit-learn",
 ]
 
 [project.optional-dependencies]
-gpr = ["scikit-learn"]
 test = ["pytest>=7.0"]
 
 [tool.setuptools.packages]
