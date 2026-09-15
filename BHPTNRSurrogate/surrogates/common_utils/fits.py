@@ -9,13 +9,22 @@ import numpy as np
 import scipy
 from scipy.interpolate import splrep, splev
 from . import utils
-from .eval_pysur import evaluate_fit as evaluate_GPR
+try:
+    from .eval_pysur import evaluate_fit as evaluate_GPR
+except ImportError:
+    evaluate_GPR = None
 
 #----------------------------------------------------------------------------------------------------
 def _evaluate_GPR_at_EIM_nodes(X, fit_data):
-    """ Evaluate the GPR at one EIM node 
+    """ Evaluate the GPR at one EIM node
         For information on the inputs, please look at all_modes_surrogate()
     """
+    if evaluate_GPR is None:
+        raise ImportError(
+            "The eval_pysur submodule is required for GPR-based surrogate models "
+            "(e.g. BHPTNRSur2dq1e3). Initialize it with:\n"
+            "  cd BHPTNRSurrogate && git submodule init && git submodule update"
+        )
 
     [h_eim_gpr_mode, eim_indicies] = fit_data
     [q_log10, chi] = X

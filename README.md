@@ -60,13 +60,21 @@ mode was calibrated to NR in the comparable mass ratios. The EMRISur1dq1e4 model
 this package but can be accessed from [EMRISurrogate](https://bhptoolkit.org/EMRISurrogate/).
 **CAUTION :** This model is outdated and we advise for using BHPTNRSurrogate(s).
 
+## Mass convention
+
+Both BHPTNRSur models use total mass by default (`mass_scale='M'`). For
+uncalibrated waveforms, the underlying ppBHPT data use the primary mass `m1`, so
+the package rescales both time and strain by `q/(q+1)` to return total-mass units.
+
+This changes the default for uncalibrated waveforms from the implicit `m1`
+convention used before version 0.2.0. To reproduce that earlier behavior, pass
+`mass_scale='m1'` explicitly. This option is only available for uncalibrated
+geometric waveforms; calibrated and physical waveforms require `mass_scale='M'`.
+
 # Requirements
 
-This package requires Python 3, sklearn, hashlib, and gwtools.
-
-```bash
-pip install scikit-learn hashlib gwtools
-```
+This package requires Python 3.8 or newer. Runtime dependencies, including
+scikit-learn for the two-dimensional model, are installed automatically.
 
 Parts of the accompanying Jupyter notebook will require gwsurrogate, 
 which can be installed with either pip
@@ -94,7 +102,17 @@ wget https://zenodo.org/records/13340319/BHPTNRSur1dq1e4.h5
 wget https://zenodo.org/records/13340319/BHPTNRSur2dq1e3.h5
 ```
 
-3. Simply move these files into the data directory `BHPTNRSurrogate/data/`.
+3. Create `BHPTNRSurrogate/data/` and move the files into it.
+
+4. Install the package locally:
+
+```bash
+pip install -e .
+```
+
+Alternatively, if you skip steps 2-3, the h5 data files will be automatically downloaded into the package's `data/` directory the first time you call a model. This follows the package-local strategy used by `gwsurrogate`.
+
+Set `BHPTNR_SURROGATE_DATA_DIR` before importing the package to use a custom data directory.
 
 # Examples
 

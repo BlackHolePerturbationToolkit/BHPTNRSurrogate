@@ -4,15 +4,15 @@
 ## Author : Tousif Islam, Nov 2022 [tislam@umassd.edu / tousifislam24@gmail.com]
 ##==============================================================================
 
-from common_utils import utils, fits
-import common_utils.check_inputs as checks
+from ..common_utils import utils, fits
+from ..common_utils import check_inputs as checks
 
 #----------------------------------------------------------------------------------------------------
 def evaluate_surrogate(X_sur, X_calib, X_bounds, time, modes, modes_available, alpha_coeffs,\
-                       beta_coeffs, alpha_beta_functional_form, calibrated, M_tot, dist_mpc, 
+                       beta_coeffs, alpha_beta_functional_form, calibrated, M_tot, dist_mpc,
                        orb_phase, inclination, fit_data_dict_1, fit_data_dict_2, B_dict_1, \
                        B_dict_2, fit_func, decomposition_funcs, norm, mode_sum, neg_modes, \
-                       lmax, CoorbToInert):
+                       lmax, CoorbToInert, mass_factor=1.0):
     """
     Inputs
     ======
@@ -95,8 +95,9 @@ def evaluate_surrogate(X_sur, X_calib, X_bounds, time, modes, modes_available, a
                            B_dict_1, B_dict_2, lmax, fit_func, decomposition_funcs, norm)
     
     # process the raw surrogate output depending on the user inputs
-    t_surrogate, h_surrogate = utils.obtain_processed_output(X_calib, time, hsur_raw_dict, alpha_coeffs, 
-                                    beta_coeffs, alpha_beta_functional_form, calibrated, M_tot, dist_mpc, 
-                                    orb_phase, inclination, mode_sum, neg_modes, lmax, CoorbToInert)
+    t_surrogate, h_surrogate = utils.obtain_processed_output(X_calib, time, hsur_raw_dict, alpha_coeffs,
+                                    beta_coeffs, alpha_beta_functional_form, calibrated, M_tot, dist_mpc,
+                                    orb_phase, inclination, mode_sum, neg_modes, lmax, CoorbToInert,
+                                    mass_factor=mass_factor)
     
     return t_surrogate, h_surrogate

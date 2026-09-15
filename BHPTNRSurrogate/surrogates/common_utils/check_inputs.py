@@ -4,6 +4,8 @@
 ## Author : Tousif Islam, Aug 2022 [tislam@umassd.edu / tousifislam24@gmail.com]
 ##==============================================================================
 
+import warnings
+
 import numpy as np
 
 #---------------------------------------------------------------------------------------------------- 
@@ -33,8 +35,10 @@ def check_domain_of_validity(X_in, X_bounds):
 
     for param_indx in range(len(X_in)):
         if X_in[param_indx]<X_bounds[0][param_indx] or X_in[param_indx]>X_bounds[1][param_indx]:
-            print("**** warning **** : input parameter is outside bounds for paramter value at index %d"
-                  %param_indx)
+            warnings.warn(
+                "Input parameter is outside bounds for parameter value at index %d" % param_indx,
+                stacklevel=3,
+            )
         
 #---------------------------------------------------------------------------------------------------- 
 def check_extrinsic_params(M_tot, dist_mpc, orb_phase, inclination, mode_sum):
