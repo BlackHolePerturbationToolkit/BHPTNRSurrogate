@@ -5,4 +5,7 @@ from . import check_inputs
 from . import doc_string
 from . import load_splines
 from . import filehash
-from .eval_pysur import evaluate_fit
+try:
+    from .eval_pysur import evaluate_fit
+except ImportError:
+    evaluate_fit = None

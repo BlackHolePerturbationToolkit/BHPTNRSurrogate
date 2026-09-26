@@ -12,8 +12,6 @@
 
 import numpy as np
 import h5py
-import matplotlib.pyplot as plt
-import os
 import copy
 from . import load_splines
 from . import utils

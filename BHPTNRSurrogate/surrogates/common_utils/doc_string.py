@@ -77,12 +77,26 @@ def generic_doc_for_models() -> None:
                  When set to True, it applies a scaling to the uncalibrated
                  surrogate waveform. This scaling has been obtained by calibrating
                  the ppBHPT waveforms to NR in comparable mass ratio
-                 regime. 
-                 Please consult a specific model's documentation for information on 
+                 regime.
+                 Please consult a specific model's documentation for information on
                  how modes are calibrated to NR.
                  If set to False, the raw (uncalibrated) ppBHPT waveforms are returned.
                  Default: True
-                 
+
+    mass_scale:  Mass convention for the waveform output. Options: 'M' or 'm1'.
+                 Default: 'M' (total mass).
+                 Calibrated waveforms already use total mass M, so passing
+                 mass_scale='m1' with calibrated=True raises a ValueError.
+                 When calibrated=False and mass_scale='M', the raw ppBHPT waveform
+                 (which uses m1 as the mass scale) is rescaled to total mass M by
+                 applying a factor of q/(q+1) to both time and strain.
+                 When calibrated=False and mass_scale='m1', the raw ppBHPT waveform
+                 is returned without any rescaling. This reproduces the default
+                 behavior from versions before 0.2.0.
+                 In summary, mass_scale='m1' is only available for uncalibrated
+                 geometric waveforms. Physical waveforms requested with M_tot and
+                 dist_mpc require mass_scale='M'.
+
     Output
     ======
     t : time
@@ -155,4 +169,3 @@ def BHPTNRSur2dq1e3_doc() -> None:
     Model details can be found in arXiv:2407.18319. 
     """
     return
-

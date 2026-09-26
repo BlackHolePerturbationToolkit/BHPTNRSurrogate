@@ -23,7 +23,7 @@ def read_amplitude_fits(f, lmode, mmode):
     # spline fit info : values at the knots
     h_spline_amp=f['l%s_m%s/fitparams_amp'%(lmode,mmode)][:]
     # combine spline info
-    h_eim_amp_spline=[(knots_amp[flag], h_spline_amp[flag],int(degree)) for flag 
+    h_eim_amp_spline=[(knots_amp[flag], h_spline_amp[flag],int(degree.item())) for flag
                       in range(len(eim_indicies_amp))]
     
     return eim_indicies_amp, B_amp, h_eim_amp_spline
@@ -45,7 +45,7 @@ def read_phase_fits(f, lmode, mmode):
     # spline fit info : values at the knots
     h_spline_ph=f['l%s_m%s/fitparams_phase'%(lmode,mmode)][:]
     # combine spline info
-    h_eim_ph_spline=[(knots_ph[flag], h_spline_ph[flag],int(degree)) for flag 
+    h_eim_ph_spline=[(knots_ph[flag], h_spline_ph[flag],int(degree.item())) for flag
                      in range(len(eim_indicies_ph))]
     
     return eim_indicies_ph, B_ph, h_eim_ph_spline
@@ -67,7 +67,7 @@ def read_real_part_fits(f, lmode, mmode):
     # spline fit info : values at the knots
     h_spline_re=f['l%s_m%s/fitparams_re'%(lmode,mmode)][:]
     # combine spline info
-    h_eim_re_spline=[(knots_re[flag], h_spline_re[flag],int(degree)) for 
+    h_eim_re_spline=[(knots_re[flag], h_spline_re[flag],int(degree.item())) for
                                   flag in range(len(eim_indicies_re))]
     
     return eim_indicies_re, B_re, h_eim_re_spline
@@ -90,7 +90,7 @@ def read_imag_part_fits(f, lmode, mmode):
     # spline fit info : values at the knots
     h_spline_im=f['l%s_m%s/fitparams_im'%(lmode,mmode)][:]
     # combine spline info
-    h_eim_im_spline=[(knots_im[flag], h_spline_im[flag],int(degree)) for 
+    h_eim_im_spline=[(knots_im[flag], h_spline_im[flag],int(degree.item())) for
                                   flag in range(len(eim_indicies_im))]
     
     return eim_indicies_im, B_im, h_eim_im_spline

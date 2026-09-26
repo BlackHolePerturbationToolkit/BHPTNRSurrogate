@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "BHPTNRSurrogate"
+version = "0.2.0"
+description = "Black hole perturbation theory numerical relativity surrogate waveform models"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy",
+    "scipy",
+    "h5py",
+    "gwtools",
+    "scikit-learn",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+
+[tool.setuptools.packages]
+find = {where = ["."], include = ["BHPTNRSurrogate*"]}
+
+[tool.setuptools.exclude-package-data]
+"*" = ["*.h5"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: requires h5 data download (deselect with '-m \"not slow\"')",
+    "gwsurrogate: requires gwsurrogate package and h5 data (deselect with '-m \"not gwsurrogate\"')",
+]
